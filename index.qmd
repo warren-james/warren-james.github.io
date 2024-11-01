@@ -1,10 +1,10 @@
 ---
-title: "warren-james.github.io"
+title: "Warren James, PhD"
+pagetitle: "Warren James"
+subtitle: "A very average boy, doing very average things"
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+This would be my landing page
 
 ```{r}
 1 + 1

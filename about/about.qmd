@@ -1,0 +1,9 @@
+---
+title: "About"
+---
+
+this would be a page where I talk about myself because I'm cool like that
+
+```{r}
+1 + 1
+```

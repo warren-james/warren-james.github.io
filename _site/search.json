@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Warren James, PhD",
+    "section": "",
+    "text": "This would be my landing page\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "this is a quick “about me section”\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about/about.html",
+    "href": "about/about.html",
+    "title": "About",
+    "section": "",
+    "text": "this would be a page where I talk about myself because I’m cool like that\n\n1 + 1\n\n[1] 2"
+  }
+]
