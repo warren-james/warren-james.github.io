@@ -1,0 +1,9 @@
+---
+title: "Some things I wrote about things I find interesting"
+description: |
+  I've spent a lot of time working on various projects and ended up with many files. <br>
+  This is where I save the nicest ones that I'll probably find useful at some point in the future. <br>
+  For the most part, I've avoided getting on a soap box, but a little difference of opinion never hurt anyone. 
+---
+
+Landing page for any blog posts I'll make at some point. Basically, anything I do that I think may be of use to other people (and my presumably future smarter self) in the future will go here. 

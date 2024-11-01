@@ -19,5 +19,12 @@
     "title": "About",
     "section": "",
     "text": "this would be a page where I talk about myself because I’m cool like that\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Landing page for any blog posts I’ll make at some point. Basically, anything I do that I think may be of use to other people (and my presumably future smarter self) in the future will go here."
   }
 ]

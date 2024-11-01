@@ -1,14 +1,20 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Warren James"
   navbar:
+    tools:
+      - icon: github
+        href: https://github.com/warren-james
     right:
       - href: index.qmd
         text: "Home"
       - text: "About"
         href: about/about.qmd
+      - text: "Blog"
+        href: blog/index.qmd
 
 format:
   html:
