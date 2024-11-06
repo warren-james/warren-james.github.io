@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="I’ve spent a lot of time working on various projects and ended up with many files.   This is where I save the nicest ones that I’ll probably find useful at some point in the future.   For the most part, I’ve avoided getting on a soap box, but a little difference of opinion never hurt anyone.">
+<meta name="description" content="This is where I have stored all the supplementary material for any papers I’ve been involved in.   Where the data can be shared, I have included a link to the github repository. Otherwise, I did my best (at the time) to make something to demonstrate what the data looked like and the choices we made regarding the analysis.">
 
-<title>Some things I wrote about things I find interesting – Warren James</title>
+<title>Supplementary Materials – Warren James</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,6 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,7 +71,65 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -99,11 +159,11 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../blog/index.html" aria-current="page"> 
+    <a class="nav-link" href="../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../supMat/index.html"> 
+    <a class="nav-link active" href="../supMat/index.html" aria-current="page"> 
 <span class="menu-text">Supplementary Materials</span></a>
   </li>  
 </ul>
@@ -125,12 +185,12 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Some things I wrote about things I find interesting</h1>
+<h1 class="title">Supplementary Materials</h1>
 </div>
 
 <div>
   <div class="description">
-    <p>I’ve spent a lot of time working on various projects and ended up with many files. <br> This is where I save the nicest ones that I’ll probably find useful at some point in the future. <br> For the most part, I’ve avoided getting on a soap box, but a little difference of opinion never hurt anyone.</p>
+    <p>This is where I have stored all the supplementary material for any papers I’ve been involved in. <br> Where the data can be shared, I have included a link to the github repository. Otherwise, I did my best (at the time) to make something to demonstrate what the data looked like and the choices we made regarding the analysis.</p>
   </div>
 </div>
 
@@ -150,7 +210,42 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1719788400000" data-listing-file-modified-sort="1730907149986" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="44" data-listing-word-count-sort="8613">
+<div class="thumbnail">
+<p><a href="../supMat/2024_06_IdentifyingKeySystemComponents/index.html" class="no-external"></a></p><a href="../supMat/2024_06_IdentifyingKeySystemComponents/index.html" class="no-external">
+<p class="card-img-top"><img src="2024_06_IdentifyingKeySystemComponents\index_files\figure-html\compare functions-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../supMat/2024_06_IdentifyingKeySystemComponents/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../supMat/2024_06_IdentifyingKeySystemComponents/index.html" class="no-external">VOICES: Identidying Key Service Components</a>
+</h3>
+<div class="listing-subtitle">
+<a href="../supMat/2024_06_IdentifyingKeySystemComponents/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="../supMat/2024_06_IdentifyingKeySystemComponents/index.html" class="no-external">The supplementary material for the paper looking at how different service components effect key clinical outcomes and health care use. This additional material demonstrates…<strong></strong></a>
+</div>
+</div>
+<div class="metadata">
+<a href="../supMat/2024_06_IdentifyingKeySystemComponents/index.html" class="no-external">
+<div class="listing-date">
+Jul 1, 2024
+</div>
+<div class="listing-author">
+Warren James
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

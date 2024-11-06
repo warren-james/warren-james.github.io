@@ -15,12 +15,20 @@ website:
         href: about/index.qmd
       - text: "Blog"
         href: blog/index.qmd
+      - href: supMat/index.qmd
+        text: "Supplementary Materials"
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
-    toc: true
+    theme:
+      light: 
+        - cosmo
+      dark: 
+        - superhero
+   # css: styles.css
+   # toc: true
+
+# include-in-header: move-toggle.Rhtml
 
 editor: source
 

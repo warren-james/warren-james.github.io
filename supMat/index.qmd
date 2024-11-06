@@ -1,0 +1,13 @@
+---
+title: "Supplementary Materials"
+description: | 
+  This is where I have stored all the supplementary material for any papers I've been involved in. <br> 
+  Where the data can be shared, I have included a link to the github repository. Otherwise, I did my best (at the time) to make something to demonstrate what the data looked like and the choices we made regarding the analysis. 
+listing: 
+  contents: 
+     - "**/index.qmd"
+     - "**/index.markdown" 
+     - "**/index.md"
+  sort: "date desc"
+---
+

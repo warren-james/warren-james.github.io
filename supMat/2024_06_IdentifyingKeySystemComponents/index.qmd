@@ -1,0 +1,804 @@
+---
+title: "VOICES: Identidying Key Service Components"
+author: "Warren James"
+date: "2024-07-01"
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.align = "center",
+  fig.width = 12,
+  fig.height = 8
+)
+```
+
+```{css, echo = F}
+<!-- .header1 { -->
+<!-- color: #8a2587; -->
+<!-- } -->
+
+.caption {
+margin: auto;
+text-align: left;
+}
+```
+
+```{r setup some ICD codes, include = F, echo = F}
+# This is the same list as the landing page. I've only included it so that they can be used later on when generating the synthetic dataset 
+# this is by no means a clinically valid dataset in terms of what ICD codes appear in the the synthetic records. but I though it was 
+# better than just making random codes
+Codes_SI <- c("A01", "A011", "A02", "A020", "A021", "A022", "A028", "A029", "A03", "A033", "A039", 
+              "A04", "A044", "A045", "A046", "A047", "A048", "A049", 
+              "A15", 
+              "A170", "A171", "A192", "A199",
+              "A270", "A279", "A321", "A327", "A329", "A379", "A390", "A394", "A398", "A400", "A401",
+              "A403", "A408", "A409", 
+              "A41", "A410", 
+              "A4102", 
+              "A420", "A422", "A428", "A46", "A481", "A483", "A4901", 
+              "A561", "A681", "A692", "A70",
+              "B59",
+              "G001", "G002", 
+              "G008", "G009", "G01", "G01", "G02", "G042", "G060", "G061", "G062", 
+              "H600", "H601", "H602", "H603", "H660", "H664", "H669", "H700", "H709", "H730", 
+              "I00", "I330", "I339", 
+              "J010", "J011", "J012", "J018", "J019", "J020", "J029", "J030", "J039", "J051", "J069", "J13",
+              "J14", "J150", "J151", "J152", "J153", "J154", "J155", "J156", "J157", "J158", "J159", 
+              "J168", "J180", "J181", "J182", "J188", "J189", "J208", "J209", "J22", "J36", "J390", "J391", "J440",
+              "J690", "J698", "J849", "J851", "J852", "J860", "J869", "J950", "J985", "J698", "J849", 
+              "K223", "K353", "K358", "K37", "K570", "K571", "K572", "K574", "K610", "K611", "K612", "K613", 
+              "K614", "K630", "K631", "K650", "K658", "K659", "K750", "K800", "K803", "K804", "K810", 
+              "K811", 
+              "K819", "K822", "K830", "K832",
+              "L010", "L011", "L020", "L021", "L022", "L023", "L024", "L028", "L029", "L030", "L031",
+              "L032", "L033", "L038", "L039", "L050", "L080",
+              "M000", "M0002", "M0008", "M0080", 
+              "M009", 
+              "M01",
+              "M4640", "M650", "M6510",
+              "M710",
+              "M726", 
+              "M860", "M861", "M8630", "M8640", "M8650", "M8660", 
+              "M868", "M869",
+              "N10", "N110", "N111", "N118", "N119", "N12", "N136", "N151", "N159", "N300", "N308", "N309", 
+              "N340", "N390", "N410", "N431",
+              "N45", 
+              "N481", "N482", "N499", "N61", "N700", "N709", "N711", "N719", 
+              "N730", "N731", "N739", "N751", "N760", "N761", "N763", "N764", "N768", 
+              "O080", "O2330", "O231", "O233", "O234", "O235", "O239", "O411", "O85","O860", "O861", 
+              "O862", 
+              "O864", "O868", "O911",
+              "R572", 
+              "T814", "T845")
+
+
+Codes_Cancer <- c("C00", "C000", "C001", "C002", "C003", "C004", "C005", "C006", "C008", "C009", 
+                  "C01", "C02", "C020", "C021", "C023", "C024", "C028", "C029",
+                  "C03", "C030", "C031", "C039",
+                  "C04", "C040", "C041", "C048", "C049",
+                  "C05", "C050", "C051", "C052", "C058", "C059", 
+                  "C06", "C060", "C061", "C062", "C068", "C069", 
+                  "C07", "C08", "C080", "C081", "C088", "C089", 
+                  "C09", "C090", "C091", "C098", "C099", 
+                  "C10", "C100", "C101", "C102", "C103", "C104", "C108", "C109", 
+                  "C11", "C110", "C111", "C112", "C113", "C118", "C119", 
+                  "C12", "C13", "C130", "C131", "C132", "C138", "C139", 
+                  "C14", "C140", "C142", "C148", 
+                  "C15", "C150", "C151", "C152", "C153", "C154", "C155", "C158", "C159", 
+                  "C16", "C160", "C161", "C162", "C163", "C164", "C165", "C166", "C168", "C169", 
+                  "C17", "C170", "C171", "C172", "C173", "C178", "C179", 
+                  "C18", "C180",  
+                  "C181", "C1811", "C1819", 
+                  "C182", 
+                  "C183", 
+                  "C184", 
+                  "C185", 
+                  "C1859", "C186", 
+                  "C187", 
+                  "C188", 
+                  "C189", 
+                  "C19",  
+                  "C20",  
+                  "C21", "C210", "C211", "C212", "C218",  
+                  "C22", "C220", "C221", "C222", "C223", "C224", "C227", "C229",
+                  "C23", 
+                  "C24", "C240", "C241", "C248", "C249",
+                  "C25", "C250", "C251", "C252", "C253", "C254", "C257", "C258", "C259",
+                  "C26", "C260", "C261", "C269",
+                  "C30", "C300", "C301",
+                  "C31", "C310", "C311", "C312", "C313", "C318", "C319",
+                  "C32", "C320", "C321", "C322", "C323", "C328", "C329",
+                  "C33", 
+                  "C34", "C340", "C341", "C342", "C343", "C348", "C349",
+                  "C37", 
+                  "C38", "C380", "C381", "C382", "C383", "C384", "C388",
+                  "C39", "C390", "C399",
+                  "C40", "C400", "C401", "C402", "C403", "C408", "C409",
+                  "C41", "C410", "C411", "C412", "C413", "C414", 
+                  "C419",
+                  "C43", "C430",
+                  "C431", "C4311", 
+                  "C432", "C4321",
+                  "C433", "C4331", "C4339", 
+                  "C434", 
+                  "C435", "C4351", "C4359",  
+                  "C436", "C4361", 
+                  "C437", "C4371",  
+                  "C438", "C4381", "C4389",  
+                  "C439", 
+                  "C44", "C440", "C441",
+                  "C443", "C444", "C445", "C446", "C447", "C448", "C449", 
+                  "C45", "C450", "C451", "C452", "C457", "C459", 
+                  "C46", "C460", "C461", "C462", "C463", "C467", 
+                  "C469", 
+                  "C47", "C470", "C471", "C472", "C473", "C474", "C475", "C476", "C478", "C479", 
+                  "C48", "C408", "C481", "C482", "C488", 
+                  "C49", "C490", "C491", "C492", "C493", "C494", "C495", "C496", "C498", "C499", 
+                  "C50", "C500", "C5001",  
+                  "C501", "C5011",
+                  "C5021", 
+                  "C503", "C5031",
+                  "C504", "C5041",
+                  "C505", "C5051",
+                  "C506", "C5061",
+                  "C508", "C5081",
+                  "C509", "C5091",
+                  "C51", "C510", "C511", "C512", "C518", "C519", 
+                  "C52", 
+                  "C53", "C530", "C531", "C538", "C539",  
+                  "C54", "C540", "C541", "C542", "C543", "C548", "C549", 
+                  "C55",
+                  "C56",
+                  "C57", "C570", "C571", "C572", "C573", "C574", "C577", "C578", "C579", 
+                  "C58",
+                  "C60", "C600", "C601", "C602", "C608", "C609",
+                  "C61",
+                  "C62", "C620", "C621", "C629", 
+                  "C63", "C630", "C631", "C632", "C637", "C638", "C639", 
+                  "C64",
+                  "C65",
+                  "C66",
+                  "C67", "C670", "C671", "C672", "C673", "C674", "C675", "C676", "C677", "C678", "C679", 
+                  "C68", "C680", "C681", "C688", "C689",
+                  "C69", "C690", "C691", "C692", "C693", "C694", "C695", "C696", "C698", "C699", 
+                  "C70", "C700", "C701", "C709", 
+                  "C71", "C710", "C711", "C712", "C713", "C714", "C715", "C716", "C717", "C718", "C719", 
+                  "C72", "C720", "C721", "C722", "C723", "C724", "C725", 
+                  "C729", 
+                  "C73",
+                  "C74", "C740", "C741", "C749",   
+                  "C75", "C750", "C751", "C752", "C753", "C754", "C755", "C758", "C759", 
+                  "C76", "C760", "C761", "C762", "C763", "C764", "C765", 
+                  "C768", 
+                  "C77", "C770", "C771", "C772", "C773", "C774", "C775", "C778", "C779", 
+                  "C78", "C780", "C781", "C782", "C783", "C784", "C785", "C786", "C787", "C788", 
+                  "C79", "C790", "C791", "C792", "C793", "C794", "C795", "C796", "C797", "C798", "C799", 
+                  "C80", 
+                  "C81", "C810", "C811", "C812", "C813", "C814", "C817", "C819", 
+                  "C82", "C820", "C821", "C822", "C823", "C824", "C825", "C862",
+                  "C829",
+                  "C83", "C830", "C831",
+                  "C833", "C834", "C835", "C836", "C837", "C838", "C839", 
+                  "C84", "C840", "C841",
+                  "C844", 
+                  "C846", "C847", 
+                  "C849", 
+                  "C85", "C851", "C852", 
+                  "C859", 
+                  "C86", "C860", "C861", "C862", "C863", "C864", "C865", "C866", 
+                  "C88", "C880",
+                  "C882", "C883", "C884",
+                  "C889", 
+                  "C90", "C900", "C901", "C902", "C903",  
+                  "C91", "C910", "C911",  
+                  "C913", "C914", "C915", "C916", 
+                  "C919", 
+                  "C92", "C920", "C921", "C922", "C923", "C924", "C925", "C926", 
+                  "C929", 
+                  "C93", "C930", "C931", 
+                  "C933", 
+                  "C939", 
+                  "C94", "C940", 
+                  "C942", "C943", "C944",  
+                  "C946",
+                  "C95", "C950", "C951",
+                  "C959", 
+                  "C96", "C960", 
+                  "C962",
+                  "C964", "C965", "C966", 
+                  "C969", 
+                  "C97", "C97X")
+
+Codes_CVD <- c("I21", "I22", "I252", "I099", "I110", "I130", 
+               "I132",
+               "I255", "I420", "I425", 
+               "I426", "I427", "I428", "I429", "I43", "I50", "P290", "I70", "I71", "I731", "I738", 
+               "I739", "I771", "I790",
+               "I79", 
+               "K551", "K558", "K559", "Z958", "Z959", "G45", "G46", 
+               "H340", "H341", "I60", "I61", "I62", "I63", 
+               "I65", "I66", "I67", "I68")
+```
+
+
+
+```{r, warning = F, message = F, include = F, echo = F}
+myColour <- "#8a2587"
+```
+
+# Introduction
+
+The supplementary material for the [paper](https://www.thelancet.com/journals/lanrhe/article/PIIS2665-9913(24)00082-1/fulltext) looking at how different service components effect key clinical outcomes and health care use. This additional material demonstrates on a set of synthetic data, the data processing and analysis carried out for the paper "__Identifying key health system components associated with improved outcomes to inform the re-configuration of services for adults with rare autoimmune rheumatic diseases: a mixed-methods study__". 
+
+# Library 
+
+These are the packages that were used in the analysis of the data. Please note, the version numbers might be different, but the methods are still the same. 
+
+```{r load libraries, warning = F, message = F}
+# packages for analysis and processing
+library(tidyverse)
+library(tidybayes)
+library(brms)
+library(lubridate)
+
+# packages for figures and tables in this document 
+library(see)
+library(ggridges)
+library(reactable)
+
+# Set the seed for reproducibility 
+set.seed(64327)
+```
+
+```{r figure settings, echo = F}
+# Sort out the theme
+textSize <- 17:20
+theme_set(theme_bw())
+theme_update(
+  title = element_text(size = textSize[3]),
+  axis.text = element_text(size = textSize[2]),
+  axis.title = element_text(size = textSize[3]),
+  legend.text = element_text(size = textSize[1])
+)
+```
+
+# Load data 
+
+This loads in a dataset for the posterior samples from one of the models fit in this [paper](https://www.thelancet.com/journals/lanrhe/article/PIIS2665-9913(24)00082-1/fulltext). This is from the multivariable analysis regarding the rates of Serious Infection. The data is arranged in a long format with the `iter` column linking draws from the posterior across the different parameters. Due to the link functions used in the `brms` package when fitting a negative binomial model, all coefficients for the mu value are on a log scale. For simplicity, coefficients for socio demographic features are not included in this dataset. As this is the case, the estimates retrieved from modelling these data will invariably be more certain than the real data. 
+
+```{r load data, message = F}
+df_SI <- read_csv("data/df_SI.csv")
+
+head(df_SI)
+```
+
+There are a few rows that aren't needed for this demonstration, so the dataset will tidied up to make things easier to generate a synthetic dataset. 
+
+```{r clean up data}
+df_SI <- df_SI %>% 
+  select(iter, param, Coef) %>% 
+  spread(param, Coef) %>% 
+  select(iter, shape, Intercept, everything())
+
+head(df_SI)
+```
+
+Now the posterior draws are in an easier format to use to make some synthetic data. As reported in the paper, different health boards had access to different service components. To this end, I will use the survey responses to generate a set of subjects for each synthetic board who has access to the respective components. 
+
+```{r generate subject data, message = F}
+df_survResps <- read_csv("data/surveyResponses.csv") %>% 
+  # will help make things a little less confusing if I use a more descriptive label
+  rename(Board = ID) %>% 
+  # need to tidy up the columns so they match the ones in the df_SI dataset
+  mutate(
+    # combine two responses
+    AdviceandorLed = as.numeric(NurseAdviceLine | NurseLedClinic), 
+    # invert General Clinic value for Cohorted Clinics
+    CohortedClinic = abs(GeneralClinic - 1),
+    # Make columns for intercept and shape that are always on 
+    Intercept = 1,
+    shape = 1
+  )
+
+df_survResps <- df_survResps %>% 
+  select(Board, colnames(df_SI %>% select(-iter)))
+
+df_survResps
+```
+
+# Generate Synthetic dataset
+
+Create a dataset with 50 patients per service and add a column with a random iter value ranging from 1 to `r nrow(df_SI)` to retrieve a random draw from the posterior. Then I can combine the posterior draws dataset in order to get a value for the parameters in a negative binomial distribution. From this, I can then generate some synthetic data. 
+
+```{r Sort out parameter values for various patients, message = F}
+# create some patient data
+df_patientData <- df_survResps %>% 
+  expand_grid(subj = 1:50) %>% 
+  mutate(iter = sample(1:nrow(df_SI), nrow(.), replace = T), 
+         subj = row_number())
+
+# create a dataset that has the parameter values for each row in the df_patientData
+df_params <- tibble(iter = df_patientData$iter) %>% 
+  left_join(df_SI)
+
+# get the parameter values for each patient 
+for(i in colnames(df_params)[2:ncol(df_params)]){
+  df_patientData[i] <- df_params[i] * df_patientData[i]
+}  
+
+# create the mu parameter needed for the negative binomial dataset
+timeMin <- .1
+timeMax <- 24
+
+df_patientData <- df_patientData %>% 
+  mutate(
+    # calculate the mu value for the negative binomial parameter
+    mu = exp(rowSums(across(c(Intercept:WaitTimeNewWithinWeek)))),
+    # add in a random value for the time in study
+    timeYears = round(runif(nrow(.), timeMin, timeMax), digits = 2)
+  )
+```
+
+## Simulate visit data 
+
+Now all the values are in the dataset, we can produce count data for the number of visits each patient had during the time they were in the study. 
+
+```{r functions, include = F, echo = F}
+# function to generate times for visits for positive events 
+# This is the poisson process, so we use sample time to event from the exponential distribution
+poisProc <- function(Rate, timeObs){
+  # initial values 
+  timeSum <- 0
+  outTimes <- c()
+  running <- T
+  
+  # sample from an exponential distribution until we go past the observation time
+  while(running){
+    # generate a timestamp
+    thisTime <- rexp(1, Rate)
+    
+    # add to total
+    timeSum <- timeSum + thisTime
+    
+    # check if we've gone over time
+    if(timeSum > timeObs){
+      # if so, leave the while loop
+      return(outTimes)
+    } else {
+      # otherwise, append to our output
+      outTimes <- c(outTimes, thisTime)
+    }
+  }
+}
+
+# This will generate negative binomial distributed numbers for the total number of events 
+# the process is the same as for the poisson data, but the lambda parameter is sampled 
+# from a gamma distribution 
+nbinomProcess <- function(mu, size, time){
+  # get prob
+  prob <- size / (size + mu)
+  
+  # randomly sample from a gamma distribution to generate lambda values
+  lambda <- rgamma(1, shape = size, rate = prob/(1 - prob))
+  
+  # use the poisProc function to generate a series of timestamps for events
+  return(poisProc(lambda, time))
+}
+
+# Function to generate positive and negative records
+genVisits <- function(nExtra, thisRate, thisSize, thisTime){
+  # generate positive events according to functions described above
+  posVisits <- cumsum(nbinomProcess(thisRate, thisSize, thisTime))
+  
+  # generate random negative events to avoid 0 counts not appearing in the dataset
+  ExtraVisits <- runif(nExtra, 1e-4, thisTime)
+  
+  # combine into a tibble for now... 
+  output <- tibble(posEvent = rep(c(1, 0), c(length(posVisits), nExtra)),
+                   time = c(posVisits, ExtraVisits)) %>% 
+    arrange(time)
+  
+  return(list(posEvent = output$posEvent,
+              EventTime = output$time))
+}
+
+
+
+```
+
+### Demonstration 
+
+To show that this function behaves in the expected way, I have generated two datasets using the bespoke `nbinomProcess` function and the built in `rnbinom` function to generate two datasets using the same parameters. The exposure time will be kept constant to allow for an easier comparison to be made with the true distribution. 
+
+```{r compare functions}
+# set some parameters
+N <- 1e6
+thisMu <- 3.4
+thisSize <- 10.3
+
+# generate data using the rnbinom() function
+df_rnbinom <- tibble(subj = 1:N, 
+                     nEvents = rnbinom(N, thisSize, mu = thisMu), 
+                     thisFunction = "rnbinom")
+
+# generate data using the nbinomProcess() function
+df_nbinomProcess <- tibble(subj = 1:N,
+                           thisFunction = "nbinomProcess") 
+df_nbinomProcess$nEvents <- sapply(1:N, function(i){
+  nbinomProcess(thisMu, thisSize, 1)
+})
+df_nbinomProcess$nEvents <- sapply(1:N, function(i){
+  length(df_nbinomProcess$nEvents[[i]])
+})
+
+# create figure to compare 
+rbind(df_rnbinom, df_nbinomProcess) %>% 
+  ggplot(aes(nEvents, fill = thisFunction)) + 
+  geom_histogram(binwidth = 1, 
+                 position = "dodge") + 
+  geom_line(data = tibble(x = 0:max(c(df_rnbinom$nEvents, df_nbinomProcess$nEvents)), 
+                          y = dnbinom(x, thisSize, mu = thisMu) * N),
+            aes(x, y), 
+            inherit.aes = F) +
+  geom_point(data = tibble(x = 0:max(c(df_rnbinom$nEvents, df_nbinomProcess$nEvents)), 
+                           y = dnbinom(x, thisSize, mu = thisMu) * N),
+             aes(x, y), 
+             size = 3,
+             inherit.aes = F) +
+  scale_fill_flat()
+
+```
+
+From the above, we can see that the functions produce very similar results that both match onto the true distribution with a high enough number of samples. The reason for the `nbinomProcess` function is to produce a number of events with time stamps to make data that looks similar to what would be available for analysis. 
+
+## Create synthetic dataset
+
+```{r generate event times}
+# generate a series of positive and negative events 
+# For the purposes of this dataset, I've made it so that everyone has 3 "negative" events
+toBind <- t(sapply(1:nrow(df_patientData), function(i){
+  time <- df_patientData$timeYears[i]
+  genVisits(3, df_patientData$mu[i], df_patientData$shape[i] * time, time)
+})) 
+
+# bind the data and unnest the list columns 
+df_patientData <- df_patientData %>% 
+  cbind(toBind) %>% 
+  unnest(c(posEvent, EventTime)) 
+```
+
+## Format dataset 
+
+Now we have the event times, we can make the dataset look a touch more realistic. 
+
+```{r Make data more realistic}
+# end Date of study to get index data for each patient
+endDate <- as.Date("2020-10-31") 
+
+# function to convert between numbers and the data
+ChangeTime <- function(og_date, thisYears){
+  if(thisYears[1] < 0){
+    sub <- T
+    thisYears <- abs(thisYears)
+  } else {
+    sub <- F
+  }
+  
+  # sort year value
+  floorYears <- floor(thisYears)
+
+  # sort month value
+  thisMonth <- (thisYears - floorYears) * 12
+  floorMonth <- floor(thisMonth)
+  
+  # sort day value
+  thisDay <- thisMonth - floorMonth
+  thisDay <- round(thisDay * 28)
+  
+  # have to do the months as days because it goes wonky with certain dates otherwise 
+  if(sub){
+    og_date -(years(floorYears) + days(floorMonth * 28) + days(thisDay)) 
+  } else {
+    og_date + (years(floorYears) + days(floorMonth * 28) + days(thisDay))   
+  }
+}
+
+# format the dataset to look more realistic
+df_patientData <- df_patientData %>% 
+  select(-c(Intercept, shape, iter, mu)) %>%
+  mutate(across(c(AdviceandorLed:WaitTimeNewWithinWeek), ~ abs(.x) > 0), 
+         indexDate = ChangeTime(endDate, -timeYears), 
+         eventDate = ChangeTime(indexDate, EventTime)) %>% 
+  select(subj, indexDate, Board, timeYears, everything(), -EventTime)
+
+# add in an mcon column which is based on whether the event was "positive"
+# NB: The "Codes_X" variables are defined in the markdown document which can be 
+#     found in the github repository. 
+#     They are the same as the codes seen in the readME file for the repository. 
+df_patientData$mcon <- sapply(1:nrow(df_patientData), function(i){
+  if(df_patientData$posEvent[i]) {
+    sample(Codes_SI, 1)
+  } else {
+    sample(c(Codes_Cancer, Codes_CVD), 1)
+  }
+})
+
+# Add in some other codes
+df_patientData$ocon <- sapply(1:nrow(df_patientData), function(i){
+  nOthers <- sample(0:5, 1)
+  if(df_patientData$posEvent[i]){
+    output <- sample(c(Codes_SI, Codes_Cancer, Codes_CVD), nOthers)
+  } else {
+    output <- sample(c(Codes_Cancer, Codes_CVD), nOthers)
+  }
+  paste(c(output, rep("NA", 5 - nOthers)), collapse = "|")
+})
+
+# tidy up the dataset 
+df_patientData <- df_patientData %>% 
+  separate(ocon, into = paste0("ocon", c(1:5)), sep = "[|]")
+
+# show the dataset
+reactable(df_patientData)
+
+```
+
+Please note, the ICD-10 codes that don't relate to Serious Infection were sample from two other lists regarding Cancer and Cardiovascular Disease so these probably aren't the most clinically valid. The extra codes are simply there to give an impression of what the real data looks like. 
+
+# Modelling 
+
+Now we have a *somewhat* realistic dataset, we can model these data. The data needs to be processed so it is in a format that is amenable to being modelled. To do this, we need a single row per patient with a count of how many events of interest occurred (Serious Infections in this case), how long they were in the study for, and which services were available in their primary board of treatment. In the real data, we would need to check for the presence of ICD-10 codes relating to Serious Infection, but as this data is synthetic we already have a flag for rows where an ICD-10 code for Serious Infection was present. Another thing to consider is that the real data were drawn from inpatient records. As this was the case, in the original dataset there could be multiple rows for a continuous stay. When cleaning the real data, care has to be taken to avoid counting the same event multiple times due to patients being transferred during a single continuous stay. Fortunately here, we don't have to deal with that, but this should be kept in mind when looking at real data of this sort. 
+
+```{r setup model Data, message = F}
+df_modelData <- df_patientData %>% 
+  group_by(subj, Board, timeYears, 
+           AdviceandorLed, CohortedClinic, JointParaClinic, LocalAAVpath, 
+           OwnDayCaseUnit, VascMDT, WaitTimeNewWithinWeek) %>% 
+  summarise(SI_events = sum(posEvent))
+
+reactable(df_modelData)
+```
+
+## Run model 
+
+The model was fit using the `brms` library. All variables regarding the service components were entered as main effects. In the paper, additional parameters include Sex (deviation scaled), Age (median centered and decade scaled), Urban/Rural status (2 fold classification), and Scottish Index of Multiple Deprivation (as quintiles with 3 set as the baseline). Additionally, there was a random intercept for board of treatment to account for differences in base rates of Serious Infection. For this example, these haven't been included. All coefficients regarding the service components (and the demographic features in the paper) were given a weakly informative prior of a student t distribution with a mean of 0, degrees of freedom of 3, and standard deviation of 1. A comparison between the prior predictions and posterior predictions can be seen by fitting the same model with the `sample_prior` argument set to `"only"`.
+
+```{r run model}
+my_prior <- prior(student_t(3, 0, 1), class = "b")
+
+# A model that only samples the prior 
+# I've commented this out because it doesn't need to be run here 
+# but should you want to check the prior assumptions, this is the code you need
+# m_nbinomn_priorOnly <- brm(
+#   SI_events | rate(timeYears) ~
+#     AdviceandorLed + CohortedClinic + JointParaClinic + 
+#     LocalAAVpath + OwnDayCaseUnit + VascMDT + 
+#     WaitTimeNewWithinWeek, 
+#   data = df_modelData, 
+#   family = negbinomial(), 
+#   prior = my_prior,
+#   sample_prior = "only",
+#   chains = 1,
+#   iter = 4000, 
+#   warmup = 3000,
+#   control = list(adapt_delta = .9)
+# )
+
+m_nbinom <- brm(
+  SI_events | rate(timeYears) ~
+    AdviceandorLed + CohortedClinic + JointParaClinic + 
+    LocalAAVpath + OwnDayCaseUnit + VascMDT + 
+    WaitTimeNewWithinWeek, 
+  data = df_modelData, 
+  family = negbinomial(), 
+  prior = my_prior, 
+  chains = 1,
+  iter = 4000, 
+  warmup = 2000,
+  control = list(adapt_delta = .9)
+)
+summary(m_nbinom)
+```
+
+Above, the model results can be show in terms of the coefficient values. The first thing to notice is that the Credibility Intervals are more narrow than those of in the paper, but this is primarily due to there being less noise in the estimates associated with patients having varying demographic features and no noise added due to random effects. In essence, this simulated data only allows access to service components to vary with all other features being the same. Generally, the results look very similar to those in the paper despite the limitations. 
+
+## Show model results 
+
+Simply looking at the summary isn't always the easiest way to understand these results, so below I've created a few plots to demonstrate make things clearer. The first thing to do is get the posterior draws. 
+
+```{r}
+post_nbinom <- m_nbinom %>% 
+  as.matrix() %>% 
+  as_tibble() %>% 
+  select(-c(lp__, lprior)) 
+```
+
+### Plotting results {.tabset}
+#### Raw coefficients 
+
+This figure shows the raw coefficients on a log scale. With the expection of the Intercept, all values can be compared to the 0 line in order to get a sense for the direction of the effect. 
+
+```{r show raw coefficients, echo = F, message = F}
+post_nbinom %>% 
+  select(-shape) %>% 
+  # tidy up for the plot 
+  gather(1:ncol(.), 
+         key = "param",
+         value = "coef") %>% 
+  mutate(param = ifelse(grepl("Intercept", param), str_replace(param, "b_", "a_"), param)) %>% 
+  ggplot(aes(coef, param)) + 
+  geom_density_ridges(colour = "transparent", 
+                      fill = myColour, 
+                      alpha = .3) + 
+  stat_pointinterval(colour = myColour) + 
+  scale_y_discrete("") +
+  geom_vline(xintercept = 0)
+```
+
+#### Incident Rate Ratios
+
+This figure shows the Incident Rate Ratio for each service component. These values correspond to the ratio of the rate between a service component being present and not being present. Values greater than one show an increase in the rate, while values lower than one show a decrease in the rate. 
+
+```{r show IRR, echo = F, message = F}
+post_nbinom %>% 
+  select(-c(shape, b_Intercept)) %>% 
+  # tidy up for the plot 
+  gather(1:ncol(.), 
+         key = "param",
+         value = "coef") %>% 
+  mutate(coef = exp(coef)) %>% 
+  ggplot(aes(coef, param)) + 
+  geom_density_ridges(colour = "transparent", 
+                      fill = myColour, 
+                      alpha = .3) + 
+  stat_pointinterval(colour = myColour) + 
+  scale_y_discrete("") +
+  scale_x_continuous("Incident Rate Ratio") +
+  geom_vline(xintercept = 1)
+```
+
+#### Results as rates
+
+This figure shows the results as rate values. This way compares how the presence of different service components was associated with changes in the yearly rate of Serious Infection. The vertical line represents the mean Intercept rate with the shaded region showing the 95% credibility interval. Please note, this doesn't show the range of predicted counts, but the uncertainty in the estimate for the mean parameter (i.e., the mean rate of events in these data).
+
+```{r show rates, echo = F, message = F}
+toPlot <- post_nbinom %>%
+  select(-shape) %>% 
+  # tidy up for the plot 
+  gather(2:ncol(.), 
+         key = "param",
+         value = "coef") %>% 
+  mutate(coef = exp(coef + b_Intercept))
+
+toPlot_Intercept <- post_nbinom %>% 
+  select(b_Intercept) %>% 
+  mutate(b_Intercept = exp(b_Intercept)) %>%
+  mean_hdci()
+
+toPlot %>% 
+  ggplot(aes(coef, param)) + 
+  geom_density_ridges(fill = myColour, 
+                      colour = "transparent", 
+                      alpha = .3) + 
+  stat_pointinterval(colour = myColour) + 
+  geom_vline(xintercept = toPlot_Intercept$b_Intercept) +
+  annotate("rect", 
+           xmin = toPlot_Intercept$.lower, xmax = toPlot_Intercept$.upper, 
+           ymin = -Inf, ymax = Inf, 
+           fill = myColour, alpha = .3) + 
+  scale_y_discrete("") + 
+  scale_x_continuous("Rate per year")
+  
+```
+
+## Expected number of events over time
+
+```{r, echo = F, include = F}
+df_modelData%>% 
+  add_predicted_draws(m_nbinom) %>% 
+  group_by(subj, timeYears, SI_events) %>% 
+  median_hdci(.prediction) %>% 
+  arrange(timeYears) %>% 
+  ggplot(aes(timeYears, SI_events)) + 
+  geom_point() + 
+  geom_segment(aes(y = .lower, yend = .upper, xend = timeYears))
+
+```
+
+
+This plot shows the total number of expected events over time in the absence of any of the service components (in grey). Each facet shows how this number of events could be expected to change this count compared to having no other service components. The larger shaded region shows where 95% of the data would be expected to lie in a negative binomial distribution using the point estimates from the model outputs. The solid line shows the mean number of events to be expected given the parameter values. The shaded region between the dashed lines shows the 95% credibility interval around the estimate for the mean value. 
+
+```{r over time plot, echo = T}
+# poorly named function... please don't do this, make useful function names
+# this function is also really specific to this problem, so it would need to be adapted 
+# for any other model/dataset
+# Using the rnbinom() function is susceptible to the upper and lower bounds moving about due to 
+# the nature of these data being integers... 
+makePlot <- function(thisModel, minTime, maxTime, res = .02) {
+  post <- thisModel %>% as.matrix() %>% 
+    as_tibble() %>% 
+    select(-c(lprior, lp__)) %>% 
+    mutate(across(2:(ncol(.) - 1), ~ .x + b_Intercept),
+           across(1:(ncol(.) - 1), ~ exp(.x))) %>% 
+    gather(1:(ncol(.)), 
+           key = "param", 
+           value = "coef") %>% 
+    group_by(param) %>% 
+    mean_hdci(coef)  %>% 
+    expand_grid(time = seq(minTime, maxTime, res)) %>% 
+    group_by(param) %>% 
+    mutate(iter = row_number()) %>% 
+    select(iter, everything()) %>% 
+    ungroup() 
+  
+  quantile_data <- post %>% 
+    select(param, coef, time) %>% 
+    spread(param, coef) %>% 
+    gather(2:(ncol(.) - 1), 
+           key = "param", 
+           value = "mu") %>% 
+    mutate(param = str_remove(param, "b_"), 
+           param = str_remove(param, "TRUE"),
+           q.5 = qnbinom(.5, shape * time, mu = mu * time),
+           q.975 = qnbinom(.975, shape * time, mu = mu * time),
+           q.025 = qnbinom(.025, shape * time, mu = mu * time))
+  
+  mu_post <- post %>% 
+    select(-c(.width, .point, .interval)) %>%  
+    filter(!param %in% c("shape", "b_Intercept")) %>% 
+    left_join(post %>%
+                filter(param == "shape") %>% 
+                select(iter, coef) %>% 
+                rename(shape = coef)) %>% 
+    mutate(param = str_remove(param, "b_"), 
+           param = str_remove(param, "TRUE"),
+           q.5_med = qnbinom(.5, shape * time, mu = coef * time),
+           q.5_upr = qnbinom(.5, shape * time, mu = .upper * time),
+           q.5_lwr = qnbinom(.5, shape * time, mu = .lower * time)) 
+  
+  quantile_data[quantile_data$param != "Intercept",] %>% 
+    ggplot(aes(time, q.5, colour = param)) + 
+    geom_path(data = quantile_data[quantile_data$param == "Intercept",] %>% 
+                select(-param), 
+              aes(time, q.5),
+              colour = "black") +
+    geom_ribbon(data = quantile_data[quantile_data$param == "Intercept",] %>% 
+                select(-param), 
+                aes(ymin = q.025, ymax = q.975), 
+                fill = "black", 
+                colour = "transparent",
+                alpha = .1) + 
+    geom_path() + 
+    geom_ribbon(aes(ymin = q.025, ymax = q.975, 
+                    fill = param), 
+                colour = "transparent",
+                alpha = .2) +
+    geom_ribbon(data = mu_post,
+                aes(x = time,
+                    ymin = q.5_lwr - .2, ymax = q.5_upr + .2,
+                    y = q.5_med,
+                    fill = param),
+                alpha = .2,
+                linetype = "longdash") +
+    scale_x_continuous("Time since Index Date") + 
+    scale_y_continuous("Estimated total number of Serious Infections") +
+    facet_wrap(~param) +
+    theme(legend.position = "bottom", 
+          panel.grid.major.y = element_line())
+  
+  # return(post)
+}
+
+makePlot(m_nbinom, .1, 24) 
+
+```
+
+
+# Session Info
+```{r session info}
+sessionInfo()
+```
+
+
