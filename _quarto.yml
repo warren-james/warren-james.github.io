@@ -25,6 +25,7 @@ format:
         - cosmo
       dark: 
         - superhero
+    lightbox: true
    # css: styles.css
    # toc: true
 

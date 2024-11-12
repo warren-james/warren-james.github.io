@@ -1,0 +1,378 @@
+---
+title: "P-values and Clinical Decisions"
+author: "Warren James"
+date: "2024-06-13"
+format: 
+  html:
+    toc: TRUE
+    toc-depth: 3
+    toc-location: right
+    smooth-scroll: true
+    lightbox: true
+---
+
+# Introduction 
+
+I was asked by an old master's student for some advice about presenting the results of some work they had done looking at readmission amongst people discharged to a ward vs. being sent home. Obviously, we can appreciate that there may be some differences in terms of the outcomes between people sent home and those remaining in hospital. While I was very excited to see him using R for his analysis and Rmarkdown to show his working, something else didn't sit well with me. His question was whether there was any "__significant__" difference in the probability of these people being readmitted to hospital 30 days after being discharged. 
+
+I have no qualms with discussing the problems of significance testing in a host of different contexts (follow this [link](https://statmodeling.stat.columbia.edu/wp-content/uploads/2013/03/1154-Hauer-The-harm-done-by-tests-of-significance.pdf) for a fantastic discussion of inappropriate applications of significance testing), and as such this grabbed my attention. The approach I prefer to take is one that looks at what we could reasonably surmise given the data that is in front of us. Therefore, I prefer to employ Bayesian methods to answer most (scientific) questions I'm presented with. 
+
+Being the pedant I am, I took the work and offered an alternative perspective that I believe safeguarded against some of the issues that are mentioned in the paper I referenced above. The aim of this isn't to discourage people from using p-values, but to try and anticipate how your research would be used by stakeholders. If they aren't likely to understand the nuances of Null Hypothesis Significance Testing, or may misinterpret the results, then maybe it's not the best idea to use these tools. 
+
+## Packages used
+
+Here are the packages I used for this post: 
+
+```{r load in libraries, warning = F, message = F}
+library(tidyverse) # data processing
+library(tidybayes) # for tidy format model draws
+library(brms)      # Bayesian regression
+library(see)       # prettier colour schemes
+library(ggridges)  # a nice package for nice plots
+
+# set the theme 
+theme_set(theme_bw() + 
+            theme(legend.position = "bottom"))
+
+# for reproducibility 
+set.seed(970431)
+
+# The colours I used for any plots 
+myColours <- c("#c62828", "#283593", "#2e7d32", "#f9a825")
+```
+
+
+# The Problem and the data
+
+The example offered was a small dataset containing 51 patients with diabetes who were either discharged home or to another ward, and a record of whether they had been readmitted within 30 days. I recreated these data using the following code: 
+
+```{r recreate data}
+df_readmission <- tibble(Group = rep(c("Home", "Ward"), c(24, 27)),
+                         readmit = c(rep(c(1, 0), c(2, 22)), rep(c(1, 0), c(1, 26)))) %>% 
+  mutate(Group = factor(Group, levels = c("Ward", "Home")))
+```
+
+First thing I did was recreate the analysis I was presented with. 
+
+```{r fisher test}
+df_fisher <- df_readmission %>% 
+  group_by(Group) %>% 
+  summarise(totalNoReadmit = n() - sum(readmit), 
+            totalReadmit = sum(readmit))
+
+# Needs to be a matrix for the fisher.test function...
+matrix_fisher <- as.matrix(df_fisher %>% select(totalNoReadmit, totalReadmit)) 
+dimnames(matrix_fisher)[[1]] <- c("Ward", "Home")
+
+fisherResults <- fisher.test(matrix_fisher)
+fisherResults
+```
+
+Which replicated the results (not surprisingly, as they'd done a very good job of showing their working). From these results, we can see that there is no significant difference between the risk of readmission for those discharged home vs. those discharged to a ward. Less statistically minded people may, through no fault of their own, mistakenly interpret this as "there is no difference in the risk of readmission between those discharged home or a ward, so let's send them all home". Which 1) isn't how NHST works, and 2) would be a very strong statement to make given the amount of uncertainty present in our estimate. 
+
+The best estimate for the Odds of being sent how is `r round(fisherResults$estimate, 2)`, but the range goes from a huge reduction (`r round(fisherResults$conf.int[1], 2)`) to an incredible increase (`r round(fisherResults$conf.int[2], 2)`). I'm not saying that this would certainly be ignored, but we have to be careful in how we present these results. Therefore, I offered an alternative approach using Bayesian methods. 
+
+# An alternative approach
+
+## visualising the uncertainty in the data
+
+First, I considered that the dataset is very small. This raised the question of: __what sort of probability values could reasonably produce data like these?__ Making the assumption that a beta distribution could suitably represent these data, I produced a plot to perhaps answer this question. 
+
+```{r make beta plot}
+#| label: fig-betaDist
+#| fig-cap: "This figure shows the likelihood of various values that could have produced the observed data."
+x <- seq(0, .3, length.out = 100)
+df_beta <- df_fisher %>% 
+  expand_grid(tibble(x = x)) %>% 
+  mutate(dens = dbeta(x, totalReadmit, totalNoReadmit)) 
+
+df_beta %>% 
+  ggplot(aes(x, dens, colour = Group)) + 
+  geom_path() + 
+  scale_colour_manual(values = myColours)
+```
+
+We can see that there's a large degree of overlap in these two distributions. However a quick visual inspection would suggest that the Ward group was more likely to not be readmitted given the majority of the curve is lower than the Home group. Given we have such small numbers, it is unsurprising we didn't observe a __significant__ difference. 
+
+Therefore, I felt it best to offer a Bayesian approach. The way I viewed these data is that for 51 people, we have a record or whether they were readmitted after being discharged, and a grouping variable of where they were discharged to. So this seemed like a straightforward logistic regression problem
+
+## Model fitting
+
+First thing's first, I fit a model using the default priors from the `brms` package.
+
+```{r default priors, message = F, warning = F}
+m_defaultPriors <- brm(readmit ~ Group, 
+                       data = df_readmission, 
+                       chains = 1,
+                       family = "bernoulli", 
+                       sample_prior = T, 
+                       seed = 987421)
+
+# show model summary 
+summary(m_defaultPriors)
+```
+
+Like most people, I'm not able to transform these values onto a scale that makes sense off the top of my head. So, I've made a quick function that will summarise the the outputs on a ratio scale instead. Note, there's almost definitely a neater function out there, but we're not here to make the prettiest most efficient functions. 
+
+```{r function to get odds ratios}
+# quick function as we'll be doing this again 
+myOddsRatio <- function(thisModel){
+  as_draws_df(thisModel) %>% 
+    select(b_GroupHome) %>% 
+    mean_hdci(b_GroupHome, .width = c(.95)) %>% 
+    mutate(across(1:3, ~exp(.x)))
+}
+
+myOddsRatio(m_defaultPriors) 
+```
+
+From the above output, we can see there is still a very large amount of uncertainty about this estimate. However, the Bayesian model is a bit more certain than the original Fisher test. For those that need more convincing, take a look at Figure [-@fig-compFisherBayes] and you can clearly see that the bayesian model offers a more precise estimate. 
+
+```{r compare fisher and bayes results}
+#| fig-cap: "Odds Ratio for the likelihood of readmission to hospital when being discharged 'home' compared to a 'ward'. The x-axis is on a log10 scaled for clarity."
+#| label: fig-compFisherBayes
+#| code-fold: true
+
+# setup dataset for use later
+df_comparison <- tibble(
+  testType = c("Fisher",
+               "Bayes_defaultPriors"), 
+  mu       = c(fisherResults$estimate,
+               exp(fixef(m_defaultPriors)[2, 1])), 
+  .lower   = c(fisherResults$conf.int[1], 
+               exp(fixef(m_defaultPriors)[2, 3])), 
+  .upper   = c(fisherResults$conf.int[2], 
+               exp(fixef(m_defaultPriors)[2, 4]))
+) %>% 
+  mutate(testType = factor(testType, levels = c("Fisher", "Bayes_defaultPriors")))
+
+df_comparison %>% 
+  ggplot(aes(mu, testType, colour = testType)) + 
+  geom_vline(xintercept = 1) +
+  geom_point() + 
+  geom_linerange(aes(xmin = .lower, xmax = .upper)) +
+  scale_x_log10("Odds Ratio") + 
+  scale_y_discrete("") + 
+  scale_colour_manual(values = myColours)
+
+```
+
+Although the Bayesian model estimates are less uncertain, we still have a large degree of uncertainty in our estimate. While this may simply be a result of having a small dataset, there are other things we should also consider when fitting these models. Given we're using Bayesian stats now, we have the luxury of adding prior beliefs to our model. While priors can be subjective, we have a very real reason to not rely exclusively on default (or, even worse, uniform) priors when dealing with logistic regression.   
+
+## More informative priors 
+
+### Initial beliefs 
+
+We can retrieve the default priors from the model we implemented by using the handy function `get_prior`. 
+
+```{r get the default priors}
+get_prior(readmit ~ Group, 
+          data = df_readmission,
+          family = "bernoulli")
+```
+
+In this case, we have flat priors on the coefficient for the effect of being discharged home. In effect, this means that every value from $-\infty$ to $\infty$. Which doesn't sound very reasonable to me. However, this becomes a particular issue when handling models looking at probability. When we use the inverse logistic function on this belief (to put the values onto a probability scale), we see something undesirable happen. 
+
+```{r show why a flat prior is not great}
+#| fig-cap: "Inverse logit transformation of randomly sampled numbers between -5 and 5."
+#| label: fig-invLog_runif
+
+# get random numbers from some range 
+x <- runif(1e5, -5, 5)
+
+# perform the inverse logit function
+inv_x <- plogis(x)
+
+# plot this
+tibble(p = inv_x) %>% 
+  ggplot(aes(p)) + 
+  geom_histogram(aes(y = ..density..))
+```
+
+For this example, we only used numbers between -5 and 5, which occupies an incredibly small region of the range $-\infty$ to $\infty$, and we can already see why using priors such as these may cause issues. What the figure shows is that there is much stronger initial belief in values that are at either extreme, and so this will lead to a poorer reflection of what can actually be seen in the data. If we were to use a different prior, we could perform the same steps to look at what the prior would look like. For example, what happens if we use a Student T distribution using the same values for the intercept term in the model we already ran? 
+
+```{r prior using a student t with the OG values}
+#| fig-cap: "Inverse logit transformation of randomly sampled numbers from a Student t distribution with the parameters at df = 3, mu = 0, sigma = 2.5."
+#| label: fig-invLog_studentOG
+
+x_student <- rstudent_t(n = 1e5, df = 3, mu = 0, sigma = 2.5)
+
+tibble(x_student = plogis(x_student)) %>% 
+  ggplot(aes(x_student)) + 
+  geom_histogram(aes(y = ..density..))
+```
+
+Looks a little bit better, but what if we made the standard deviation smaller?
+
+```{r prior using a student t with tigher sigma}
+#| fig-cap: "Inverse logit transformation of randomly sampled numbers from a Student t distribution with the parameters at df = 3, mu = 0, sigma = 1."
+#| label: fig-invLog_studentTighter
+
+x_student <- rstudent_t(n = 1e5, df = 3, mu = 0, sigma = 1)
+
+tibble(x_student = plogis(x_student)) %>% 
+  ggplot(aes(x_student)) + 
+  geom_histogram(aes(y = ..density..))
+```
+
+This looks like a much more reasonable initial assumption; not only are the extremes represented to a lesser extent, there is also a smaller difference in the density between the lowest and highest points. Playing around with these values is encouraged to see how the prior belief changes, but hopefully this quick demonstration gives some insight into why this may cause a problem. 
+
+### refitting the model
+
+Now we have an understanding of our model's prior beliefs, and what these would mean for the results, we can use this to inform in a model and see how the results change. 
+
+```{r model with new priors}
+# add in somewhat informative priors 
+m_studentPrior_sigma1 <- update(m_defaultPriors, 
+                                prior = c(prior(student_t(3, 0, 1), class = "b"), 
+                                          prior(student_t(3, 0, 1), class = "intercept")))
+summary(m_studentPrior_sigma1)
+```
+
+Now we can add these results to our plot from before and see what this has done to the uncertainty in our estimates: 
+
+```{r new student t priors added, echo = F}
+#| label: fig-bayesstudentT_sigma1
+#| fig-cap: "Figure with the student t priors added to both the intercept and home coefficient."
+
+df_comparison <- df_comparison %>% 
+  bind_rows(
+    tibble(
+      testType = c("Bayes_studentT_sigma1"), 
+      mu       = c(exp(fixef(m_studentPrior_sigma1)[2, 1])), 
+      .lower   = c(exp(fixef(m_studentPrior_sigma1)[2, 3])), 
+      .upper   = c(exp(fixef(m_studentPrior_sigma1)[2, 4]))
+    )
+  ) %>% 
+  mutate(testType = factor(testType, levels = c("Fisher", "Bayes_defaultPriors", 
+                                                "Bayes_studentT_sigma1")))
+
+df_comparison %>% 
+  ggplot(aes(mu, testType, colour = testType)) + 
+  geom_vline(xintercept = 1) +
+  geom_point() + 
+  geom_linerange(aes(xmin = .lower, xmax = .upper)) +
+  scale_x_log10("Odds Ratio") + 
+  scale_y_discrete("") + 
+  scale_colour_manual(values = myColours)
+```
+
+From Figure [-@fig-bayesstudentT_sigma1], we can now see that the uncertainty in our estimate is reduced by quite a substantial amount. Something else that might be beneficial for a model fit is to change the "mean" value in the prior. At the moment, we've centred the prior on a value of 50% which would seem to be a lot higher than the actual data suggests. In this case, we might try something on the lower end to compare the model results. For example, maybe we think there is a 10% change people would be readmitted on average.  
+
+```{r model with 10% as the intercept term}
+# rerun the model with the intercept as 10% 
+m_studentPrior_10percent <- update(m_defaultPriors, 
+                                   prior = c(prior(student_t(3, 0, 1), class = "b"), 
+                                             prior(student_t(3, qlogis(.1), 1), class = "intercept")))
+summary(m_studentPrior_10percent)
+
+```
+
+
+```{r}
+#| label: fig-bayesstudentT_10percent
+#| fig-cap: "Figure with the student t priors added to both the intercept and home coefficient. The prior for the intercept now has a mean of 10%."
+
+df_comparison <- df_comparison %>% 
+  bind_rows(
+    tibble(
+      testType = c("Bayes_studentT_10percent"), 
+      mu       = c(exp(fixef(m_studentPrior_10percent)[2, 1])), 
+      .lower   = c(exp(fixef(m_studentPrior_10percent)[2, 3])), 
+      .upper   = c(exp(fixef(m_studentPrior_10percent)[2, 4]))
+    )
+  ) %>% 
+  mutate(testType = factor(testType, levels = c("Fisher", "Bayes_defaultPriors", 
+                                                "Bayes_studentT_sigma1", 
+                                                "Bayes_studentT_10percent")))
+
+df_comparison %>% 
+  ggplot(aes(mu, testType, colour = testType)) + 
+  geom_vline(xintercept = 1) +
+  geom_point() + 
+  geom_linerange(aes(xmin = .lower, xmax = .upper)) +
+  scale_x_log10("Odds Ratio") + 
+  scale_y_discrete("") + 
+  scale_colour_manual(values = myColours)
+```
+
+Here, we don't see much of a change in the Ratio, but there is a small gain in terms of certainty. Though, perhaps we're not showing the model results in a way that is best suited to answering this question. 
+
+## Another way to show the data
+
+Admittedly, I have somewhat omitted a sin with the above figures, but I do have an explanation. Bayesian statistics isn't pre-occupied with what _**IS**_ and _**ISN'T**_ significant, but rather more interested in what conclusions could reasonably be supported by the data. In showing only the 95% intervals, we're hiding some of the information that the model is communicating to us. The reason I did this is because we have a mixture of Frequentist and Bayesian methods being applied and shown in the one figure, and I wanted to draw comparisons to the initial analysis. 
+
+However, I think this pushes us towards the binary thinking that is often encourage by things like p-values and as such I think these figures should be avoided if possible. Additionally, if we circle back to the link I shared earlier which discusses a few examples of p-values being used incorrectly, figures like these run the risk of encouraging errors in judging what the results show. The risk we run is that the end user will look at these plots and wrongly infer: "The interval contains 1 (no effect), and so there is no difference between the groups, and therefore we should send everyone home". This isn't what the analysis shows, however it's not impossible to imagine people mistakenly making this judgement. The way I see it, it is our job to try and avoid people making these incorrect statements and the best method for doing this is to clearly communicate the model results in a way that is more readily understood. Thankfully, Credibility Intervals make more intuitive sense, so we can use this to our advantage when plotting model results. 
+
+In this case, I opted to avoid the use of odds ratios and instead plot the predicted probability that someone would be readmitted given they were discharged home vs. to a ward. 
+
+```{r show model predictions compared to real data, message = F, warning = F}
+#| code-fold: true
+#| label: fig-betterFigure
+#| fig-cap: "Figure showing the entire posterior for the Bayesian models. The solid point shows the median posterior estimate with the 50% (thick) and 95% (thin) credibility intervals as lines. The hollow points show the crude estimate calculated directly from the data."
+
+# function to get posterior summaries for these data
+# again, not very pretty
+getPost <- \(listModels){
+  output <- tibble()
+  for(i in 1:length(listModels)){
+    output <- bind_rows(output, 
+                        as_draws_df(listModels[[i]]) %>% 
+                          select(1:2) %>% 
+                          mutate(modelName = names(listModels)[i]) %>% 
+                          rowid_to_column(var = "iter"))
+  }
+  
+  return(output %>% 
+           mutate(b_GroupHome = b_Intercept + b_GroupHome, 
+                  across(c(2:3), ~exp(.x))) %>% 
+           gather(2:3, 
+                  key = "param", 
+                  value = "coef") %>% 
+           mutate(dischargeTo = ifelse(param == "b_Intercept", "Ward", "Home")))
+}
+
+getPost(list(default = m_defaultPriors, 
+             studentT = m_studentPrior_sigma1, 
+             tenPercent = m_studentPrior_10percent)) %>% 
+  ggplot(aes(dischargeTo, coef, colour = dischargeTo, fill = dischargeTo)) + 
+  stat_pointinterval(point_interval = "median_hdci", 
+                     .width = c(.5, .95), 
+                     show.legend = F) + 
+  stat_slabinterval(alpha = .3) +
+  # add in a crude estimate from the raw data
+  geom_point(data = df_readmission %>% 
+               rename(dischargeTo = Group) %>% 
+               group_by(dischargeTo) %>% 
+               summarise(N = n(), 
+                         n = sum(readmit)) %>% 
+               mutate(perc = n/N), 
+             aes(y = perc), 
+             size = 5, pch = 1, 
+             show.legend = F) +
+  facet_wrap(~modelName) + 
+  scale_colour_manual(values = myColours) + 
+  scale_fill_manual(values = myColours) + 
+  scale_y_continuous(labels = scales::percent_format())
+```
+
+The benefit of figure [-@fig-betterFigure] is that we can now see the range of values that would be supported by these data. Although we can't clearly estimate the magnitude of difference, what we can see is that the data support higher probabilities of readmissions for people discharged home than to a ward. Although this isn't always the case, we can see that there is some reason to believe these people may be at more risk, though we would want more data in order to be even more certain. By coupling this figure with the previous figures looking at the odds Ratios, we can get a more complete picture of what is happening. The odds ratios suggest an increase (albeit uncertain) in the probability of being readmitted when discharged home, while the entire posterior shows that the risk of readmission is relatively low in both groups. In having the entire posterior visible, we can more readily make intuitive judgements about what the model is showing without having to rely on measures like p-values. 
+
+My thoughts are that the p-value in and of itself isn't a very useful number to take away. It doesn't really help us to understand what is happening in the data, but instead is a somewhat simplified "answer" to what are usually complicated questions. In showing the uncertainty in our estimates (either the ratio, or the probability of readmission), we can see that the data are more supportive of there being a small different between the outcomes. However, the most clear take away here is that we could use more data to inform our estimates. 
+
+# Final Thoughts
+
+When dealing with questions like these, my main concern is always that someone will misinterpret the results. People that work in a clinical setting aren't always trained statisticians and some will have very limited experience in understanding model outputs. In fact, this is a problem in [various fields](https://www.sciencedirect.com/science/article/pii/S1053535704000927) and across [all levels of experience](https://journals.sagepub.com/doi/full/10.1177/2515245918771329). So, just as I shouldn't be trusted to handle a scalpel and conduct an operation, maybe we need to be considerate of the fact that some people aren't as experienced in understanding the nuances of statistical inference (trying to be as diplomatic as possible here, surgery does come with more immediately higher stakes than wonky statistics). As the people that do this, it's our job to walk people through out models so that they can arrive at a sensible conclusion. 
+
+What I think we need to be ok with saying (and I'm sure people will agree) is that we can't always draw precise conclusions from our data. Especially in healthcare where the data are seldom the result of controlled experimental design outside of clinical trials. There will always be some uncertainty introduced as some point be it through small sample sizes, or even through omitted variables. In this dataset for example, it's possible that people who were discharged home were seen a less risky patients for some reason. This would be a huge confounder in our data, and would run the risk of drawing the entirely wrong conclusions from the data. But, maybe that's a post for another time. For now, hopefully this has been helpful/interesting. 
+
+
+```{r}
+sessionInfo()
+```
+
+
+
+
+
+

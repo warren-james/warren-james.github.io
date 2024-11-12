@@ -4,5 +4,11 @@ description: |
   I've spent a lot of time working on various projects and ended up with many files. <br>
   This is where I save the nicest ones that I'll probably find useful at some point in the future. <br>
   For the most part, I've avoided getting on a soap box, but a little difference of opinion never hurt anyone. 
+listing: 
+  contents: 
+     - "**/index.qmd"
+     - "**/index.markdown" 
+     - "**/index.md"
+  sort: "date desc"
 ---
 
