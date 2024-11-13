@@ -255,59 +255,21 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="packages-used">Packages used</h2>
 <p>Here are the packages I used for this post:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># data processing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.3     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.5.0     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes) <span class="co"># for tidy format model draws</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)      <span class="co"># Bayesian regression</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: Rcpp
-Loading 'brms' package (version 2.22.0). Useful instructions
-can be found by typing help('brms'). A more detailed introduction
-to the package is available through vignette('brms_overview').
-
-Attaching package: 'brms'
-
-The following objects are masked from 'package:tidybayes':
-
-    dstudent_t, pstudent_t, qstudent_t, rstudent_t
-
-The following object is masked from 'package:stats':
-
-    ar</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(see)       <span class="co"># prettier colour schemes</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)  <span class="co"># a nice package for nice plots</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'ggridges'
-
-The following objects are masked from 'package:tidybayes':
-
-    scale_point_color_continuous, scale_point_color_discrete,
-    scale_point_colour_continuous, scale_point_colour_discrete,
-    scale_point_fill_continuous, scale_point_fill_discrete,
-    scale_point_size_continuous</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the theme </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># for reproducibility </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">970431</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># The colours I used for any plots </span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>myColours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#c62828"</span>, <span class="st">"#283593"</span>, <span class="st">"#2e7d32"</span>, <span class="st">"#f9a825"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># data processing</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes) <span class="co"># for tidy format model draws</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)      <span class="co"># Bayesian regression</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(see)       <span class="co"># prettier colour schemes</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)  <span class="co"># a nice package for nice plots</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># set the theme </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># for reproducibility </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">970431</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># The colours I used for any plots </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>myColours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#c62828"</span>, <span class="st">"#283593"</span>, <span class="st">"#2e7d32"</span>, <span class="st">"#f9a825"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -315,23 +277,23 @@ The following objects are masked from 'package:tidybayes':
 <h1>The Problem and the data</h1>
 <p>The example offered was a small dataset containing 51 patients with diabetes who were either discharged home or to another ward, and a record of whether they had been readmitted within 30 days. I recreated these data using the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_readmission <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Home"</span>, <span class="st">"Ward"</span>), <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">27</span>)),</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">readmit =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">22</span>)), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">26</span>)))) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group =</span> <span class="fu">factor</span>(Group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Ward"</span>, <span class="st">"Home"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_readmission <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Home"</span>, <span class="st">"Ward"</span>), <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">27</span>)),</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">readmit =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">22</span>)), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">26</span>)))) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group =</span> <span class="fu">factor</span>(Group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Ward"</span>, <span class="st">"Home"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First thing I did was recreate the analysis I was presented with.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_fisher <span class="ot">&lt;-</span> df_readmission <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Group) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totalNoReadmit =</span> <span class="fu">n</span>() <span class="sc">-</span> <span class="fu">sum</span>(readmit), </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">totalReadmit =</span> <span class="fu">sum</span>(readmit))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Needs to be a matrix for the fisher.test function...</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>matrix_fisher <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df_fisher <span class="sc">%&gt;%</span> <span class="fu">select</span>(totalNoReadmit, totalReadmit)) </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(matrix_fisher)[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ward"</span>, <span class="st">"Home"</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>fisherResults <span class="ot">&lt;-</span> <span class="fu">fisher.test</span>(matrix_fisher)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>fisherResults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_fisher <span class="ot">&lt;-</span> df_readmission <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Group) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totalNoReadmit =</span> <span class="fu">n</span>() <span class="sc">-</span> <span class="fu">sum</span>(readmit), </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">totalReadmit =</span> <span class="fu">sum</span>(readmit))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Needs to be a matrix for the fisher.test function...</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>matrix_fisher <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df_fisher <span class="sc">%&gt;%</span> <span class="fu">select</span>(totalNoReadmit, totalReadmit)) </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(matrix_fisher)[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ward"</span>, <span class="st">"Home"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>fisherResults <span class="ot">&lt;-</span> <span class="fu">fisher.test</span>(matrix_fisher)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>fisherResults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fisher's Exact Test for Count Data
@@ -347,7 +309,7 @@ odds ratio
 </div>
 </div>
 <p>Which replicated the results (not surprisingly, as they’d done a very good job of showing their working). From these results, we can see that there is no significant difference between the risk of readmission for those discharged home vs.&nbsp;those discharged to a ward. Less statistically minded people may, through no fault of their own, mistakenly interpret this as “there is no difference in the risk of readmission between those discharged home or a ward, so let’s send them all home”. Which 1) isn’t how NHST works, and 2) would be a very strong statement to make given the amount of uncertainty present in our estimate.</p>
-<p>The best estimate for the Odds of being sent how is 2.32, but the range goes from a huge reduction (0.11) to an incredible increase 144.58. I’m not saying that this would certainly be ignored, but we have to be careful in how we present these results. Therefore, I offered an alternative approach using Bayesian methods.</p>
+<p>The best estimate for the Odds of being sent how is 2.32, but the range goes from a huge reduction (0.11) to an incredible increase (144.58). I’m not saying that this would certainly be ignored, but we have to be careful in how we present these results. Therefore, I offered an alternative approach using Bayesian methods.</p>
 </section>
 <section id="an-alternative-approach" class="level1">
 <h1>An alternative approach</h1>
@@ -355,15 +317,15 @@ odds ratio
 <h2 class="anchored" data-anchor-id="visualising-the-uncertainty-in-the-data">visualising the uncertainty in the data</h2>
 <p>First, I considered that the dataset is very small. This raised the question of: <strong>what sort of probability values could reasonably produce data like these?</strong> Making the assumption that a beta distribution could suitably represent these data, I produced a plot to perhaps answer this question.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, .<span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_beta <span class="ot">&lt;-</span> df_fisher <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="fu">tibble</span>(<span class="at">x =</span> x)) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dens =</span> <span class="fu">dbeta</span>(x, totalReadmit, totalNoReadmit)) </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>df_beta <span class="sc">%&gt;%</span> </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, dens, <span class="at">colour =</span> Group)) <span class="sc">+</span> </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span> </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> myColours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, .<span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_beta <span class="ot">&lt;-</span> df_fisher <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="fu">tibble</span>(<span class="at">x =</span> x)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dens =</span> <span class="fu">dbeta</span>(x, totalReadmit, totalNoReadmit)) </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df_beta <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, dens, <span class="at">colour =</span> Group)) <span class="sc">+</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> myColours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-betaDist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -384,18 +346,18 @@ Figure&nbsp;1: This figure shows the likelihood of various values that could hav
 <h2 class="anchored" data-anchor-id="model-fitting">Model fitting</h2>
 <p>First thing’s first, I fit a model using the default priors from the <code>brms</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m_defaultPriors <span class="ot">&lt;-</span> <span class="fu">brm</span>(readmit <span class="sc">~</span> Group, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> df_readmission, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">chains =</span> <span class="dv">1</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">family =</span> <span class="st">"bernoulli"</span>, </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sample_prior =</span> T, </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seed =</span> <span class="dv">987421</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m_defaultPriors <span class="ot">&lt;-</span> <span class="fu">brm</span>(readmit <span class="sc">~</span> Group, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> df_readmission, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">chains =</span> <span class="dv">1</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">family =</span> <span class="st">"bernoulli"</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sample_prior =</span> T, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seed =</span> <span class="dv">987421</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 2e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
+Chain 1: Gradient evaluation took 1.8e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -412,13 +374,13 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.028 seconds (Warm-up)
-Chain 1:                0.028 seconds (Sampling)
-Chain 1:                0.056 seconds (Total)
+Chain 1:  Elapsed Time: 0.025 seconds (Warm-up)
+Chain 1:                0.027 seconds (Sampling)
+Chain 1:                0.052 seconds (Total)
 Chain 1: </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show model summary </span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_defaultPriors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show model summary </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_defaultPriors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: bernoulli 
   Links: mu = logit 
@@ -439,15 +401,15 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>Like most people, I’m not able to transform these values onto a scale that makes sense off the top of my head. So, I’ve made a quick function that will summarise the the outputs on a ratio scale instead. Note, there’s almost definitely a neater function out there, but we’re not here to make the prettiest most efficient functions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quick function as we'll be doing this again </span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>myOddsRatio <span class="ot">&lt;-</span> <span class="cf">function</span>(thisModel){</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_df</span>(thisModel) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(b_GroupHome) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean_hdci</span>(b_GroupHome, <span class="at">.width =</span> <span class="fu">c</span>(.<span class="dv">95</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="sc">~</span><span class="fu">exp</span>(.x)))</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">myOddsRatio</span>(m_defaultPriors) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quick function as we'll be doing this again </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>myOddsRatio <span class="ot">&lt;-</span> <span class="cf">function</span>(thisModel){</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_df</span>(thisModel) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(b_GroupHome) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean_hdci</span>(b_GroupHome, <span class="at">.width =</span> <span class="fu">c</span>(.<span class="dv">95</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="sc">~</span><span class="fu">exp</span>(.x)))</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">myOddsRatio</span>(m_defaultPriors) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Dropping 'draws_df' class as required metadata was removed.</code></pre>
 </div>
@@ -462,27 +424,27 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup dataset for use later</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df_comparison <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">testType =</span> <span class="fu">c</span>(<span class="st">"Fisher"</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Bayes_defaultPriors"</span>), </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mu       =</span> <span class="fu">c</span>(fisherResults<span class="sc">$</span>estimate,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">exp</span>(<span class="fu">fixef</span>(m_defaultPriors)[<span class="dv">2</span>, <span class="dv">1</span>])), </span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">.lower   =</span> <span class="fu">c</span>(fisherResults<span class="sc">$</span>conf.int[<span class="dv">1</span>], </span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>               <span class="fu">exp</span>(<span class="fu">fixef</span>(m_defaultPriors)[<span class="dv">2</span>, <span class="dv">3</span>])), </span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">.upper   =</span> <span class="fu">c</span>(fisherResults<span class="sc">$</span>conf.int[<span class="dv">2</span>], </span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>               <span class="fu">exp</span>(<span class="fu">fixef</span>(m_defaultPriors)[<span class="dv">2</span>, <span class="dv">4</span>]))</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">testType =</span> <span class="fu">factor</span>(testType, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Fisher"</span>, <span class="st">"Bayes_defaultPriors"</span>)))</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>df_comparison <span class="sc">%&gt;%</span> </span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(mu, testType, <span class="at">colour =</span> testType)) <span class="sc">+</span> </span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> .lower, <span class="at">xmax =</span> .upper)) <span class="sc">+</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="st">"Odds Ratio"</span>) <span class="sc">+</span> </span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="st">""</span>) <span class="sc">+</span> </span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> myColours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup dataset for use later</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_comparison <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">testType =</span> <span class="fu">c</span>(<span class="st">"Fisher"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Bayes_defaultPriors"</span>), </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mu       =</span> <span class="fu">c</span>(fisherResults<span class="sc">$</span>estimate,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">exp</span>(<span class="fu">fixef</span>(m_defaultPriors)[<span class="dv">2</span>, <span class="dv">1</span>])), </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">.lower   =</span> <span class="fu">c</span>(fisherResults<span class="sc">$</span>conf.int[<span class="dv">1</span>], </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>               <span class="fu">exp</span>(<span class="fu">fixef</span>(m_defaultPriors)[<span class="dv">2</span>, <span class="dv">3</span>])), </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">.upper   =</span> <span class="fu">c</span>(fisherResults<span class="sc">$</span>conf.int[<span class="dv">2</span>], </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>               <span class="fu">exp</span>(<span class="fu">fixef</span>(m_defaultPriors)[<span class="dv">2</span>, <span class="dv">4</span>]))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">testType =</span> <span class="fu">factor</span>(testType, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Fisher"</span>, <span class="st">"Bayes_defaultPriors"</span>)))</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>df_comparison <span class="sc">%&gt;%</span> </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(mu, testType, <span class="at">colour =</span> testType)) <span class="sc">+</span> </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> .lower, <span class="at">xmax =</span> .upper)) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="st">"Odds Ratio"</span>) <span class="sc">+</span> </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="st">""</span>) <span class="sc">+</span> </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> myColours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-compFisherBayes" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -505,9 +467,9 @@ Figure&nbsp;2: Odds Ratio for the likelihood of readmission to hospital when bei
 <h3 class="anchored" data-anchor-id="initial-beliefs">Initial beliefs</h3>
 <p>We can retrieve the default priors from the model we implemented by using the handy function <code>get_prior</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(readmit <span class="sc">~</span> Group, </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> df_readmission,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">family =</span> <span class="st">"bernoulli"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(readmit <span class="sc">~</span> Group, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> df_readmission,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">family =</span> <span class="st">"bernoulli"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                prior     class      coef group resp dpar nlpar lb ub
                (flat)         b                                      
@@ -521,16 +483,16 @@ Figure&nbsp;2: Odds Ratio for the likelihood of readmission to hospital when bei
 </div>
 <p>In this case, we have flat priors on the coefficient for the effect of being discharged home. In effect, this means that every value from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>. Which doesn’t sound very reasonable to me. However, this becomes a particular issue when handling models looking at probability. When we use the inverse logistic function on this belief (to put the values onto a probability scale), we see something undesirable happen.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get random numbers from some range </span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fl">1e5</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># perform the inverse logit function</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>inv_x <span class="ot">&lt;-</span> <span class="fu">plogis</span>(x)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot this</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">p =</span> inv_x) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(p)) <span class="sc">+</span> </span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get random numbers from some range </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fl">1e5</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># perform the inverse logit function</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>inv_x <span class="ot">&lt;-</span> <span class="fu">plogis</span>(x)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot this</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">p =</span> inv_x) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(p)) <span class="sc">+</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
 ℹ Please use `after_stat(density)` instead.</code></pre>
@@ -553,11 +515,11 @@ Figure&nbsp;3: Inverse logit transformation of randomly sampled numbers between 
 </div>
 <p>For this example, we only used numbers between -5 and 5, which occupies an incredibly small region of the range <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>, and we can already see why using priors such as these may cause issues. What the figure shows is that there is much stronger initial belief in values that are at either extreme, and so this will lead to a poorer reflection of what can actually be seen in the data. If we were to use a different prior, we could perform the same steps to look at what the prior would look like. For example, what happens if we use a Student T distribution using the same values for the intercept term in the model we already ran?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x_student <span class="ot">&lt;-</span> <span class="fu">rstudent_t</span>(<span class="at">n =</span> <span class="fl">1e5</span>, <span class="at">df =</span> <span class="dv">3</span>, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="fl">2.5</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x_student =</span> <span class="fu">plogis</span>(x_student)) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x_student)) <span class="sc">+</span> </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x_student <span class="ot">&lt;-</span> <span class="fu">rstudent_t</span>(<span class="at">n =</span> <span class="fl">1e5</span>, <span class="at">df =</span> <span class="dv">3</span>, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="fl">2.5</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x_student =</span> <span class="fu">plogis</span>(x_student)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x_student)) <span class="sc">+</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -576,11 +538,11 @@ Figure&nbsp;4: Inverse logit transformation of randomly sampled numbers from a S
 </div>
 <p>Looks a little bit better, but what if we made the standard deviation smaller?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x_student <span class="ot">&lt;-</span> <span class="fu">rstudent_t</span>(<span class="at">n =</span> <span class="fl">1e5</span>, <span class="at">df =</span> <span class="dv">3</span>, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x_student =</span> <span class="fu">plogis</span>(x_student)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x_student)) <span class="sc">+</span> </span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>x_student <span class="ot">&lt;-</span> <span class="fu">rstudent_t</span>(<span class="at">n =</span> <span class="fl">1e5</span>, <span class="at">df =</span> <span class="dv">3</span>, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x_student =</span> <span class="fu">plogis</span>(x_student)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x_student)) <span class="sc">+</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -603,10 +565,10 @@ Figure&nbsp;5: Inverse logit transformation of randomly sampled numbers from a S
 <h3 class="anchored" data-anchor-id="refitting-the-model">refitting the model</h3>
 <p>Now we have an understanding of our model’s prior beliefs, and what these would mean for the results, we can use this to inform in a model and see how the results change.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add in somewhat informative priors </span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>m_studentPrior_sigma1 <span class="ot">&lt;-</span> <span class="fu">update</span>(m_defaultPriors, </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">"b"</span>), </span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">"intercept"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add in somewhat informative priors </span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>m_studentPrior_sigma1 <span class="ot">&lt;-</span> <span class="fu">update</span>(m_defaultPriors, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">"b"</span>), </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">"intercept"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>The desired updates require recompiling the model</code></pre>
 </div>
@@ -638,12 +600,12 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.027 seconds (Warm-up)
-Chain 1:                0.028 seconds (Sampling)
-Chain 1:                0.055 seconds (Total)
+Chain 1:  Elapsed Time: 0.025 seconds (Warm-up)
+Chain 1:                0.025 seconds (Sampling)
+Chain 1:                0.05 seconds (Total)
 Chain 1: </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_studentPrior_sigma1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_studentPrior_sigma1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: bernoulli 
   Links: mu = logit 
@@ -679,10 +641,10 @@ Figure&nbsp;6: Figure with the student t priors added to both the intercept and 
 </div>
 <p>From Figure <a href="#fig-bayesstudentT_sigma1" class="quarto-xref">6</a>, we can now see that the uncertainty in our estimate is reduced by quite a substantial amount. Something else that might be beneficial for a model fit is to change the “mean” value in the prior. At the moment, we’ve centred the prior on a value of 50% which would seem to be a lot higher than the actual data suggests. In this case, we might try something on the lower end to compare the model results. For example, maybe we think there is a 10% change people would be readmitted on average.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rerun the model with the intercept as 10% </span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>m_studentPrior_10percent <span class="ot">&lt;-</span> <span class="fu">update</span>(m_defaultPriors, </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">"b"</span>), </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                                             <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="fu">qlogis</span>(.<span class="dv">1</span>), <span class="dv">1</span>), <span class="at">class =</span> <span class="st">"intercept"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rerun the model with the intercept as 10% </span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>m_studentPrior_10percent <span class="ot">&lt;-</span> <span class="fu">update</span>(m_defaultPriors, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">"b"</span>), </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                                             <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="fu">qlogis</span>(.<span class="dv">1</span>), <span class="dv">1</span>), <span class="at">class =</span> <span class="st">"intercept"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>The desired updates require recompiling the model</code></pre>
 </div>
@@ -696,8 +658,8 @@ Figure&nbsp;6: Figure with the student t priors added to both the intercept and 
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 4e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.4 seconds.
+Chain 1: Gradient evaluation took 4.3e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.43 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -714,12 +676,12 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.033 seconds (Warm-up)
-Chain 1:                0.037 seconds (Sampling)
-Chain 1:                0.07 seconds (Total)
+Chain 1:  Elapsed Time: 0.025 seconds (Warm-up)
+Chain 1:                0.026 seconds (Sampling)
+Chain 1:                0.051 seconds (Total)
 Chain 1: </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_studentPrior_10percent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_studentPrior_10percent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: bernoulli 
   Links: mu = logit 
@@ -739,27 +701,27 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df_comparison <span class="ot">&lt;-</span> df_comparison <span class="sc">%&gt;%</span> </span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">testType =</span> <span class="fu">c</span>(<span class="st">"Bayes_studentT_10percent"</span>), </span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">mu       =</span> <span class="fu">c</span>(<span class="fu">exp</span>(<span class="fu">fixef</span>(m_studentPrior_10percent)[<span class="dv">2</span>, <span class="dv">1</span>])), </span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">.lower   =</span> <span class="fu">c</span>(<span class="fu">exp</span>(<span class="fu">fixef</span>(m_studentPrior_10percent)[<span class="dv">2</span>, <span class="dv">3</span>])), </span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">.upper   =</span> <span class="fu">c</span>(<span class="fu">exp</span>(<span class="fu">fixef</span>(m_studentPrior_10percent)[<span class="dv">2</span>, <span class="dv">4</span>]))</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">testType =</span> <span class="fu">factor</span>(testType, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Fisher"</span>, <span class="st">"Bayes_defaultPriors"</span>, </span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>                                                <span class="st">"Bayes_studentT_sigma1"</span>, </span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>                                                <span class="st">"Bayes_studentT_10percent"</span>)))</span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>df_comparison <span class="sc">%&gt;%</span> </span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(mu, testType, <span class="at">colour =</span> testType)) <span class="sc">+</span> </span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> .lower, <span class="at">xmax =</span> .upper)) <span class="sc">+</span></span>
-<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="st">"Odds Ratio"</span>) <span class="sc">+</span> </span>
-<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="st">""</span>) <span class="sc">+</span> </span>
-<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> myColours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df_comparison <span class="ot">&lt;-</span> df_comparison <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">testType =</span> <span class="fu">c</span>(<span class="st">"Bayes_studentT_10percent"</span>), </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">mu       =</span> <span class="fu">c</span>(<span class="fu">exp</span>(<span class="fu">fixef</span>(m_studentPrior_10percent)[<span class="dv">2</span>, <span class="dv">1</span>])), </span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">.lower   =</span> <span class="fu">c</span>(<span class="fu">exp</span>(<span class="fu">fixef</span>(m_studentPrior_10percent)[<span class="dv">2</span>, <span class="dv">3</span>])), </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">.upper   =</span> <span class="fu">c</span>(<span class="fu">exp</span>(<span class="fu">fixef</span>(m_studentPrior_10percent)[<span class="dv">2</span>, <span class="dv">4</span>]))</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">testType =</span> <span class="fu">factor</span>(testType, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Fisher"</span>, <span class="st">"Bayes_defaultPriors"</span>, </span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>                                                <span class="st">"Bayes_studentT_sigma1"</span>, </span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>                                                <span class="st">"Bayes_studentT_10percent"</span>)))</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>df_comparison <span class="sc">%&gt;%</span> </span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(mu, testType, <span class="at">colour =</span> testType)) <span class="sc">+</span> </span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> .lower, <span class="at">xmax =</span> .upper)) <span class="sc">+</span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="st">"Odds Ratio"</span>) <span class="sc">+</span> </span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="st">""</span>) <span class="sc">+</span> </span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> myColours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-bayesstudentT_10percent" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -778,55 +740,56 @@ Figure&nbsp;7: Figure with the student t priors added to both the intercept and 
 </section>
 <section id="another-way-to-show-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="another-way-to-show-the-data">Another way to show the data</h2>
-<p>Admittedly, I have somewhat omitted a sin with the above figures, but I do have an explanation. Bayesian statistics isn’t pre-occupied with what <em><strong>IS</strong></em> and <em><strong>ISN’T</strong></em> significant, but rather more interested in what conclusions could reasonably be supported by the data. In showing only the 95% intervals, we’re hiding some of the information that the model is communicating to us. The reason I did this is because we have a mixture of Frequentist and Bayesian methods being applied and shown in the one figure, and I wanted to draw comparisons to the initial analysis.</p>
+<p>Admittedly, I have somewhat comitted a sin with the above figures, but I do have an explanation. Bayesian statistics isn’t pre-occupied with what <em><strong>IS</strong></em> and <em><strong>ISN’T</strong></em> significant, but rather more interested in what conclusions could reasonably be supported by the data. In showing only the 95% intervals, we’re hiding some of the information that the model is communicating to us. The reason I did this is because we have a mixture of Frequentist and Bayesian methods being applied and shown in the one figure, and I wanted to draw comparisons to the initial analysis.</p>
 <p>However, I think this pushes us towards the binary thinking that is often encourage by things like p-values and as such I think these figures should be avoided if possible. Additionally, if we circle back to the link I shared earlier which discusses a few examples of p-values being used incorrectly, figures like these run the risk of encouraging errors in judging what the results show. The risk we run is that the end user will look at these plots and wrongly infer: “The interval contains 1 (no effect), and so there is no difference between the groups, and therefore we should send everyone home”. This isn’t what the analysis shows, however it’s not impossible to imagine people mistakenly making this judgement. The way I see it, it is our job to try and avoid people making these incorrect statements and the best method for doing this is to clearly communicate the model results in a way that is more readily understood. Thankfully, Credibility Intervals make more intuitive sense, so we can use this to our advantage when plotting model results.</p>
 <p>In this case, I opted to avoid the use of odds ratios and instead plot the predicted probability that someone would be readmitted given they were discharged home vs.&nbsp;to a ward.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to get posterior summaries for these data</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># again, not very pretty</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>getPost <span class="ot">&lt;-</span> \(listModels){</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  output <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(listModels)){</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(output, </span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">as_draws_df</span>(listModels[[i]]) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">mutate</span>(<span class="at">modelName =</span> <span class="fu">names</span>(listModels)[i]) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">"iter"</span>))</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(output <span class="sc">%&gt;%</span> </span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>           <span class="fu">mutate</span>(<span class="at">b_GroupHome =</span> b_Intercept <span class="sc">+</span> b_GroupHome, </span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">across</span>(<span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>), <span class="sc">~</span><span class="fu">exp</span>(.x))) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>           <span class="fu">gather</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, </span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">key =</span> <span class="st">"param"</span>, </span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">value =</span> <span class="st">"coef"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>           <span class="fu">mutate</span>(<span class="at">dischargeTo =</span> <span class="fu">ifelse</span>(param <span class="sc">==</span> <span class="st">"b_Intercept"</span>, <span class="st">"Ward"</span>, <span class="st">"Home"</span>)))</span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a><span class="fu">getPost</span>(<span class="fu">list</span>(<span class="at">default =</span> m_defaultPriors, </span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">studentT =</span> m_studentPrior_sigma1, </span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>             <span class="at">tenPercent =</span> m_studentPrior_10percent)) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(dischargeTo, coef, <span class="at">colour =</span> dischargeTo, <span class="at">fill =</span> dischargeTo)) <span class="sc">+</span> </span>
-<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_pointinterval</span>(<span class="at">point_interval =</span> <span class="st">"median_hdci"</span>, </span>
-<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">.width =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">95</span>), </span>
-<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_slabinterval</span>(<span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add in a crude estimate from the raw data</span></span>
-<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df_readmission <span class="sc">%&gt;%</span> </span>
-<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>               <span class="fu">rename</span>(<span class="at">dischargeTo =</span> Group) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>               <span class="fu">group_by</span>(dischargeTo) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>               <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">n</span>(), </span>
-<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>                         <span class="at">n =</span> <span class="fu">sum</span>(readmit)) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mutate</span>(<span class="at">perc =</span> n<span class="sc">/</span>N), </span>
-<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> perc), </span>
-<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">5</span>, <span class="at">pch =</span> <span class="dv">1</span>, </span>
-<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>modelName) <span class="sc">+</span> </span>
-<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> myColours) <span class="sc">+</span> </span>
-<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> myColours) <span class="sc">+</span> </span>
-<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to get posterior summaries for these data</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># again, not very pretty</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>getPost <span class="ot">&lt;-</span> \(listModels){</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  output <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(listModels)){</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(output, </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">as_draws_df</span>(listModels[[i]]) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">mutate</span>(<span class="at">modelName =</span> <span class="fu">names</span>(listModels)[i]) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">"iter"</span>))</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(output <span class="sc">%&gt;%</span> </span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>           <span class="fu">mutate</span>(<span class="at">b_GroupHome =</span> b_Intercept <span class="sc">+</span> b_GroupHome, </span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">across</span>(<span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>), <span class="sc">~</span><span class="fu">exp</span>(.x))) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>           <span class="fu">gather</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">key =</span> <span class="st">"param"</span>, </span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">value =</span> <span class="st">"coef"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>           <span class="fu">mutate</span>(<span class="at">dischargeTo =</span> <span class="fu">ifelse</span>(param <span class="sc">==</span> <span class="st">"b_Intercept"</span>, <span class="st">"Ward"</span>, <span class="st">"Home"</span>)))</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="fu">getPost</span>(<span class="fu">list</span>(<span class="at">default =</span> m_defaultPriors, </span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">studentT =</span> m_studentPrior_sigma1, </span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>             <span class="at">tenPercent =</span> m_studentPrior_10percent)) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(dischargeTo, coef, <span class="at">colour =</span> dischargeTo, <span class="at">fill =</span> dischargeTo)) <span class="sc">+</span> </span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_pointinterval</span>(<span class="at">point_interval =</span> <span class="st">"median_hdci"</span>, </span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">.width =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">95</span>), </span>
+<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_slabinterval</span>(<span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add in a crude estimate from the raw data</span></span>
+<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df_readmission <span class="sc">%&gt;%</span> </span>
+<span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a>               <span class="fu">rename</span>(<span class="at">dischargeTo =</span> Group) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a>               <span class="fu">group_by</span>(dischargeTo) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-34"><a href="#cb38-34" aria-hidden="true" tabindex="-1"></a>               <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">n</span>(), </span>
+<span id="cb38-35"><a href="#cb38-35" aria-hidden="true" tabindex="-1"></a>                         <span class="at">n =</span> <span class="fu">sum</span>(readmit)) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-36"><a href="#cb38-36" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mutate</span>(<span class="at">perc =</span> n<span class="sc">/</span>N), </span>
+<span id="cb38-37"><a href="#cb38-37" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> perc), </span>
+<span id="cb38-38"><a href="#cb38-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">5</span>, <span class="at">pch =</span> <span class="dv">1</span>, </span>
+<span id="cb38-39"><a href="#cb38-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb38-40"><a href="#cb38-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>modelName) <span class="sc">+</span> </span>
+<span id="cb38-41"><a href="#cb38-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> myColours) <span class="sc">+</span> </span>
+<span id="cb38-42"><a href="#cb38-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> myColours) <span class="sc">+</span> </span>
+<span id="cb38-43"><a href="#cb38-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">""</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>()) <span class="sc">+</span> </span>
+<span id="cb38-44"><a href="#cb38-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-betterFigure" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -841,16 +804,16 @@ Figure&nbsp;8: Figure showing the entire posterior for the Bayesian models. The 
 </div>
 </div>
 </div>
-<p>The benefit of figure <a href="#fig-betterFigure" class="quarto-xref">8</a> is that we can now see the range of values that would be supported by these data. Although we can’t clearly estimate the magnitude of difference, what we can see is that the data support higher probabilities of readmissions for people discharged home than to a ward. Although this isn’t always the case, we can see that there is some reason to believe these people may be at more risk, though we would want more data in order to be even more certain. By coupling this figure with the previous figures looking at the odds Ratios, we can get a more complete picture of what is happening. The odds ratios suggest an increase (albeit uncertain) in the probability of being readmitted when discharged home, while the entire posterior shows that the risk of readmission is relatively low in both groups. In having the entire posterior visible, we can more readily make intuitive judgements about what the model is showing without having to rely on measures like p-values.</p>
-<p>My thoughts are that the p-value in and of itself isn’t a very useful number to take away. It doesn’t really help us to understand what is happening in the data, but instead is a somewhat simplified “answer” to what are usually complicated questions. In showing the uncertainty in our estimates (either the ratio, or the probability of readmission), we can see that the data are more supportive of there being a small different between the outcomes. However, the most clear take away here is that we could use more data to inform our estimates.</p>
+<p>The benefit of figure <a href="#fig-betterFigure" class="quarto-xref">8</a> is that we can now see the range of values that would be supported by these data. Although we can’t clearly estimate the magnitude of difference, what we can see is that the data support higher probabilities of readmissions for people discharged home than to a ward. Although this isn’t always the case, we can see that there is some reason to believe these people may be at more risk, though we would want more data in order to be even more certain. By coupling this figure with the previous figures looking at the odds Ratios (Figure <a href="#fig-bayesstudentT_10percent" class="quarto-xref">7</a>), we can get a more complete picture of what is happening. The odds ratios suggest an increase (albeit uncertain) in the probability of being readmitted when discharged home, while the entire posterior shows that the risk of readmission is relatively low in both groups. In having the entire posterior visible, we can more readily make intuitive judgements about what the model is showing without having to rely on measures like p-values.</p>
+<p>My thoughts are that the p-value in and of itself isn’t a very useful number to take away. It doesn’t really help us to understand what is happening in the data, but instead is a somewhat simplified “answer” to what are usually complicated questions. In showing the uncertainty in our estimates (either the ratio, or the probability of readmission), we can see that the data are more supportive of there being a small difference between the outcomes. However, the most clear take away here is that we could use more data to inform our estimates.</p>
 </section>
 </section>
 <section id="final-thoughts" class="level1">
 <h1>Final Thoughts</h1>
 <p>When dealing with questions like these, my main concern is always that someone will misinterpret the results. People that work in a clinical setting aren’t always trained statisticians and some will have very limited experience in understanding model outputs. In fact, this is a problem in <a href="https://www.sciencedirect.com/science/article/pii/S1053535704000927">various fields</a> and across <a href="https://journals.sagepub.com/doi/full/10.1177/2515245918771329">all levels of experience</a>. So, just as I shouldn’t be trusted to handle a scalpel and conduct an operation, maybe we need to be considerate of the fact that some people aren’t as experienced in understanding the nuances of statistical inference (trying to be as diplomatic as possible here, surgery does come with more immediately higher stakes than wonky statistics). As the people that do this, it’s our job to walk people through out models so that they can arrive at a sensible conclusion.</p>
-<p>What I think we need to be ok with saying (and I’m sure people will agree) is that we can’t always draw precise conclusions from our data. Especially in healthcare where the data are seldom the result of controlled experimental design outside of clinical trials. There will always be some uncertainty introduced as some point be it through small sample sizes, or even through omitted variables. In this dataset for example, it’s possible that people who were discharged home were seen a less risky patients for some reason. This would be a huge confounder in our data, and would run the risk of drawing the entirely wrong conclusions from the data. But, maybe that’s a post for another time. For now, hopefully this has been helpful/interesting.</p>
+<p>What I think we need to be ok with saying (and I’m sure people will agree) is that we can’t always draw precise conclusions from our data. Especially in healthcare where the data are seldom the result of controlled experimental design outside of clinical trials. There will always be some uncertainty introduced at some point be it through small sample sizes, or even through omitted variables. In this dataset for example, it’s possible that people who were discharged home were seen a less risky patients for some reason. This would be a huge confounder in our data, and would run the risk of drawing the entirely wrong conclusions from the data. But, maybe that’s a post for another time. For now, hopefully this has been helpful/interesting.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.3.0 (2023-04-21 ucrt)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
@@ -1477,7 +1440,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
