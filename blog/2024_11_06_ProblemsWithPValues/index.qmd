@@ -126,7 +126,7 @@ myOddsRatio <- function(thisModel){
 myOddsRatio(m_defaultPriors) 
 ```
 
-From the above output, we can see there is still a very large amount of uncertainty about this estimate. However, the Bayesian model is a bit more certain than the original Fisher test. For those that need more convincing, take a look at Figure [-@fig-compFisherBayes] and you can clearly see that the bayesian model offers a more precise estimate. 
+From the above output, we can see there is still a very large amount of uncertainty about this estimate. However, the Bayesian model is a bit more certain than the original Fisher test. For those that need more convincing, take a look at Figure [-@fig-compFisherBayes] and you can clearly see that the Bayesian model offers a more precise estimate. 
 
 ```{r compare fisher and bayes results}
 #| fig-cap: "Odds Ratio for the likelihood of readmission to hospital when being discharged 'home' compared to a 'ward'. The x-axis is on a log10 scaled for clarity."

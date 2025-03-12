@@ -1,0 +1,450 @@
+---
+title: "The consequence of ignoring censorship"
+author: "Warren James"
+date: "2025-06-13"
+format: 
+  html:
+    toc: TRUE
+    toc-depth: 3
+    toc-location: right
+    smooth-scroll: true
+    lightbox: true
+    fig-height: 7
+    fig-width: 12
+    fig-dpi: 500
+execute: 
+  warning: false
+  message: false
+---
+
+# Library 
+
+Before we go anywhere, here is a pretty standard set of packages, it's not like we're doing anything insane just now. 
+
+```{r Library, warning = F, message = F}
+library(tidyverse) # process data
+library(tidybayes) # get model draws in a tidy format
+library(brms)      # fit bayesian regression models
+library(see)       # colour palette
+
+# set the theme
+theme_set(theme_bw() + 
+            theme(legend.position = "bottom"))
+```
+
+
+# Introduction 
+
+Missing follow up data is very common in healthcare research. There are many reasons why we might not have complete follow up from people: simple reasons like they only joined the study population recently and so we don't have extensive records, frustrating reasons like they moved and we no longer have access to their data, and morbid reasons like death. In each of these cases, we're only able to explain what happened to them for the time we observed them, and this is fine. 
+
+However, despite this being a constant presence in the world of healthcare research, it often feels like this goes under appreciated. Despite there being many hard working people engaged in trying to help us gain insight from censored data, there appears to be a lack of willingness to engage with this problem. It is all too common to see people attempting to answer questions that should employ survival techniques using inappropriate methods that ignore the censoring or, perhaps even worse, remove anyone that doesn't have sufficient follow up. 
+
+As the pedant I am, I wanted to make something quick to demonstrate why this is a problem and hopefully show people why they should care about this when running any analysis. This is by no means the most intensive guide to survival analysis, but more something to point to should I be asked to ignore this issue when running my own analysis. 
+
+Censorship of data can take several different forms, but the most common is called "right censored". This is when we "know" the start data and continued to observed each subject until they had the event or time ran out. For those that have the event, we can say _when_ the even occurred. However, for those that are censored all we can say is that they were event free for at least $X$ amount of time. 
+
+Data of this sort could look something like this: 
+
+```{r plot censored data}
+#| code-fold: true
+#| fig-cap: "This is what censored data could look like for a few people. The y-axis has each subject while the x-axis shows total observation time. The dots mean that the individual was censored and the crosses mean they experienced the event of interest"
+#| label: fig-censExample
+tibble(subj = 1:5, 
+       survTime = c(1.2, 1.8, 5, 4, 10), 
+       obsType = c(0, 1, 1, 0, 1)) %>% 
+  mutate(obsLabel = ifelse(obsType, "Censored", "Had event")) %>% 
+  ggplot(aes(survTime, subj, shape = obsLabel)) + 
+  geom_segment(aes(x = 0, xend = survTime, yend = subj)) + 
+  geom_point(size = 4) +
+  scale_shape_manual(values = c(16, 4)) + 
+  scale_x_continuous("Observation time") + 
+  scale_y_continuous("Subject ID") +
+  labs(shape = "Observation Type")
+  
+```
+
+In the real world, there are plenty of reasons why someone could be censored; subjects could leave the study, the study could end before observing the event for some subjects, or the subject could experience another event that means they _cannot_ experience the event of interest. The last in this list is referred to as a competing risk and is something to discuss for another time, this point is to simply demonstrate that censorhip has many flavours and should be handled with care.
+
+# Making some data 
+
+<!-- ## Simulate some data -->
+
+I'm going to use a Weibull distribution as the basis for my synthetic data. This is often used in survival analysis as it has a fully parametric form and can be very useful. There are plenty of others to choose from, but I like this one. You should be able to follow this and simply replace the word "Weibull" with any other distribution that is used in survival analysis. 
+
+The simulated dataset will have two groups that we want to compare to each other, with one group being more likely to experience the event earlier. For now, we'll imagine that we're looking at people who have a condition versus those that don't, and their risk of death. We can get into why not applying a survival analysis here would lead to weird conclusions at some point, but for now, we can just make the data. 
+
+```{r simulate data}
+# set seed for reproducibility
+set.seed(87651)
+
+# setup data
+N <- 400
+
+# setup parameters for cases and controls
+cont_shape <- 2
+cont_scale <- 10
+
+case_shape <- .9
+case_scale <- 10
+```
+
+So that's all we need, what we can do now is have a look at what the true distributions look like. 
+
+```{r plot true dist}
+#| code-fold: true
+#| fig-cap: "The true distribution for our two cohorts in terms of their survival times"
+#| label: fig-trueSurvTime
+
+plt_trueSurv <- tibble(survTime = seq(.25, 30, .25)) %>% 
+  mutate(case = dweibull(survTime, case_shape, case_scale), 
+         control = dweibull(survTime, cont_shape, cont_scale)) %>% 
+  gather(case:control, 
+         key = "group", 
+         value = "p") %>% 
+  mutate(group = factor(group, levels = c("control", "case"))) %>% 
+  ggplot(aes(survTime, p, colour = group)) + 
+  geom_path() + 
+  scale_colour_flat()
+plt_trueSurv
+```
+
+Looks alright, the controls have a distribution that is more to the right while the cases are to the left. Essentially, cases don't live as long as controls. So now let's generate some random data
+
+```{r generate data}
+df_model <- tibble(subj = 1:(N * 2), 
+                   group = rep(c("control", "case"), each = N), 
+                   trueSurv = c(rweibull(N, cont_shape, cont_scale), rweibull(N, case_shape, case_scale))) %>% 
+  mutate(group = factor(group, levels = c("control", "case")))
+```
+
+Now we can overlay this onto our true distribution and see what that looks like: 
+
+```{r overlay sim data on true dist}
+#| label: fig-simwithtrueDist
+#| fig-cap: "Figure showing the true distribution with a histogram for the simulated dataset"
+#| code-fold: true
+plt_trueSurv_withHist <- plt_trueSurv + 
+  geom_histogram(data = df_model, 
+                 aes(x = trueSurv, 
+                     y = after_stat(density),
+                     fill = group),
+                 binwidth = 1,
+                 alpha = .3,
+                 position = "dodge",
+                 inherit.aes = F) + 
+  scale_fill_flat()
+plt_trueSurv_withHist
+```
+
+Looks good enough for our purposes. However, we haven't exactly added in any censoring just now. So let's do that, the censoring we'll add in is called "right-censoring" as we won't know when the event happened if it happened after the time we were observing for. This is the most common type, and is also the type that has the most work on as far as I can see. So we'll keep it simple and grounded and just do right censoring. 
+
+I'll do this by randomly sampling between a small number and the true survival time if someone was censored. Each person will have a 50% chance of being censored so it should be roughly even. Though this might be quite a high rate of censoring. We'll also be assuming that the censoring is uninformative and wouldn't mean we couldn't observe the event happening. Unfortunately, no one has found a cure for death, so I think we're safe to make this assumption, but it is necessary to consider whether a competing event could occur that would stop a subject from being able to experience the event of interest. 
+
+```{r Add in censoring}
+# TODO: Maybe chance the censoring... it makes sense that both groups should have the same chance of being censored at 
+# all time points... currently it's based on survival time with one group haveing a lower survival time on average
+df_model <- df_model %>% 
+  mutate(
+    # censored = sample(c(0, 1), nrow(.), replace = T),
+    # censTime = runif(nrow(.), .01, trueSurv),
+    # obsTime = ifelse(censored, censTime, trueSurv)
+    censTime = runif(nrow(.), .01, .3 * max(trueSurv)),
+    censored = as.numeric(censTime < trueSurv),
+    obsTime = ifelse(censored, censTime, trueSurv)
+  )
+```
+
+:::{.callout-note}
+Keen eyed individuals will notice that I have used 1 to show censoring and 0 to show the event of interest. I know this seems weird, but this is how the package `brms` expects the censoring information to be presented. I personally also like this, 1 means "this person was censored and so I only know they lived this long event free" and 0 means "this person was not censored and I _know_ when the event happened". 
+:::
+
+
+Easy enough, just to confirm this worked, this is what our data look like now: 
+
+```{r show censored hist}
+#| fig-cap: "Graph showing the censored survival times. People with a censored time (i.e., the event wasn't observed) are in the more transparent column while the observed events are the solid colours"
+#| label: fig-showCensorship
+#| code-fold: true
+
+df_model %>% 
+  mutate(obsType = ifelse(censored, "censored", "observed"), 
+         obsType = factor(obsType, levels= c("censored", "observed"))) %>% 
+  ggplot(aes(obsTime, fill = group, alpha = obsType)) + 
+  geom_histogram() + 
+  scale_fill_flat() + 
+  scale_alpha_manual(values = c(.4, 1)) + 
+  facet_wrap(~group)
+
+```
+
+So, now we have a dataset with a bunch of censoring we can do some analysis and show why we don't want to ignore censoring.
+
+# Doing the analysis 
+
+So, there are two ways we will want to analyse these data. The first is a way I would never do, and as such, I'm kind of guessing this is how people would go about doing it. The second is the choice I would make to use, and so I feel more comfortable with this process. Either way, I'll show where the mistakes creep in and explain why the inference doesn't make sense. 
+
+## Ignoring censorship
+
+First, I'll need to set up the data to be amenable to what I think is the method employed often incorrectly. This method involves looking at who is still alive at some time point and comparing the two groups by way of a logistic regression. In this method, only people that live beyond the time point or who have died by this point are considered in the data. The problem with this is that we are removing a lot of people that could be still alive. We know that they were alive until a certain point, just not until the time point we're interested in. However, this still gives us information about the likelihood of survival. For example, what if 90% of our population that didn't die before the time point were known to be alive up until the day before? Hopefully we can recognise that it would be ridiculous to ignore them from our calculations for the probability of survival until time point $t$?
+
+So, let's make the data: 
+
+```{r prep logistic data}
+TOI <- 10
+
+df_logi <- df_model %>% 
+  filter(obsTime > TOI | (!censored & obsTime < TOI)) %>% 
+  mutate(logiSurv = obsTime > TOI)
+```
+
+The code above simply keeps people that had an observed time that was greater than the Time of Interest (`TOI`) or those that had experienced the event before the `TOI`. We then say people were alive if they were in the study longer then the TOI. Sounds simple, but isn't a great use of data. In this instance we have had to remove `r paste0((100 - (nrow(df_logi) / nrow(df_model)) * 100), "%")` of our dataset. We also have people that experienced the event almost immediately after the `TOI`, but we're ignoring that for this analysis. 
+
+:::{.callout-note}
+Just wanted to highlight that I have many grievences with this approach, if that wasn't immediately clear. 
+:::
+
+Now we can fit a simple logistic regression to these data to get the "probability of survival at 5 years"
+
+```{r fit log model}
+m_log <- brm(logiSurv ~ group, 
+             family = "bernoulli", 
+             data = df_logi, 
+             chains = 1, 
+             iter = 2000, 
+             warmup = 1000)
+```
+
+Now we've fit the model, let's have a look at the output and see what we think
+
+```{r logistic output}
+summary(m_log)
+```
+
+```{r get odds ratio for cases, include = F}
+post_m_log <- as_draws_df(m_log) %>% 
+  select(contains("b_")) %>% 
+  rowid_to_column(var = "iter")
+
+prob_m_log <- post_m_log %>% 
+  mutate(b_groupcase = b_Intercept + b_groupcase) %>% 
+  gather(contains("b_"), 
+         key = "Param", 
+         value = "logOdds") %>% 
+  mutate(Param = str_remove(Param, "b_"), 
+         prob = plogis(logOdds)) %>% 
+  group_by(Param) %>% 
+  mean_hdci(prob)
+
+# quick function to format for a sentence
+reportProb <- \(probData, Param, thisCol = "Param") {
+  probData <- probData[probData[[thisCol]] == Param,] %>% 
+    mutate(across(c(prob, .lower, .upper), ~ format(round(.x * 100, 2), nsmall = 2)))
+   
+  return(paste0(probData$prob, "% [", probData$.lower, "% | ", probData$.upper, "%]"))
+}
+
+
+reportProb(prob_m_log, "Intercept")
+reportProb(prob_m_log, "groupcase")
+
+# get log odds 
+logOdds <- post_m_log %>% 
+  mutate(logOdds = exp(b_groupcase)) %>% 
+  mean_hdci(logOdds) %>% 
+  mutate(across(c(logOdds, .lower, .upper), ~format(round(.x, 2), nsmall = 2)))
+logOdds_string <- paste0(logOdds$logOdds, " [", logOdds$.lower, " | ", logOdds$.upper, "]")
+```
+
+From this model output, we can see that the likelihood of a case being alive after `r TOI` years is `r reportProb(prob_m_log, "groupcase")` compared to the controls who had a likelihood of `r reportProb(prob_m_log, "Intercept")`. This might sound reasonable, and reflects that the case group is `r logOdds_string` as likely to have lived for the observation period. This is all well and good, but we know that this ignores a fair amount of information. So, let's fit a more appropriate model and see what the estimates look like. 
+
+## Accounting for censorship
+
+We'll be fitting a Weibull distribution as we know that this is how the data were generated. In the real world we wouldn't know this, so we would fit several models and look for different specifications, but that isn't the point in this document. I'm simply trying to demonstrate the issue with ignoring censoring in these sorts of data. 
+
+So, let's fit the model
+
+```{r fit weibull model, warning = F, message = F}
+m_weib <- brm(bf(obsTime | cens(censored) ~ group, 
+                 shape ~ group), 
+              family = "weibull", 
+              data = df_model, 
+              iter = 2000, 
+              warmup = 1000, 
+              chains = 1)
+```
+
+Now we have our new model, we can look at some values in order to compare the estimates. Something that would be interesting first is to compare the model predictions to the real data. We can do this by plotting the estimates for the distribution of survival times over @fig-simwithtrueDist as this is the true distribution of survival times. 
+
+
+```{r plot weib predictions, warning = F, message = F}
+#| label: fig-weibPredictions
+#| fig-cap: "Plot showing the true survival times as solid lines, with a histogram for the simulated data. Model predictions are shown with a dashed line for the mean estimate and a shaded region to show the 95% Credibility Intervals."
+#| code-fold: true
+
+# convert from brms parameterisation 
+get_scale <- function(mu, shape){
+  exp(mu)/gamma(1 + 1/exp(shape))
+}
+
+# get weib post
+post_weib <- as_draws_df(m_weib) %>% 
+  select(contains("b_")) %>% 
+  mutate(b_groupcase = b_groupcase + b_Intercept, 
+         b_shape_groupcase = b_shape_Intercept + b_shape_groupcase) %>% 
+  rowid_to_column(var = "iter") %>% 
+  gather(contains("b_"), 
+         key = "Param", 
+         value = "value") %>% 
+  mutate(paramType = ifelse(grepl("shape", Param), "shape", "mu"), 
+         group = ifelse(grepl("groupcase", Param), "case", "control")) %>% 
+  select(-Param) %>% 
+  spread(paramType, value) %>% 
+  mutate(scale = get_scale(mu, shape)) 
+
+pltData_weib <- post_weib %>% 
+  expand_grid(time = seq(.1, round(max(df_model$trueSurv)), .2)) %>% 
+  mutate(prob = dweibull(time, exp(shape), scale)) %>% 
+  group_by(group, time) %>% 
+  mean_hdci(prob)
+
+plt_trueSurv_withHist + 
+  geom_ribbon(data = pltData_weib, 
+              aes(y = prob, x = time, 
+                  ymin = .lower, ymax = .upper, 
+                  fill = group), 
+              colour = "transparent", 
+              alpha = .3) + 
+  geom_line(data = pltData_weib, 
+            aes(y = prob, x = time), 
+            linetype = "dashed")
+```
+
+Hopefully we're fairly convinced that this model has done a pretty good job of retrieving the true values that generated this data, we can now calculate the likelihood that someone would live until `r TOI` years. This is fairly easily done, all we need to do is look a the cumulative density distribution for our specified model and see what the density is at 5 years. 
+
+```{r weib cumulative distribution}
+#| label: fig-weibCPDF
+#| fig-cap: "This shows the inverse of the cumulative density for the weibull distribution using the posterior draws for the weibull model. This can be interpreted as the estimated likelihood of being alive at the time point on the x axis."
+#| code-fold: true
+
+plt_cpdf_weib <- post_weib %>% 
+  expand_grid(time = 0:round(max(df_model$trueSurv))) %>% 
+  mutate(prob = 1 - pweibull(time, exp(shape), scale)) %>% 
+  group_by(group, time) %>% 
+  mean_hdci(prob) %>% 
+  ggplot(aes(time, prob, colour = group, fill = group)) + 
+  geom_path(linetype = "longdash") + 
+  geom_ribbon(aes(ymin = .lower, ymax = .upper), 
+              alpha = .3, 
+              colour = "transparent") + 
+  scale_colour_flat() +
+  scale_fill_flat() 
+plt_cpdf_weib
+```
+
+```{r weib likelihoods and ratio, include = F}
+prob_m_weib <- plt_cpdf_weib[["data"]] %>% 
+  filter(time == TOI)
+
+reportProb(prob_m_weib, "control", "group")
+reportProb(prob_m_weib, "case", "group")
+
+reportProb(prob_m_log, "Intercept")
+reportProb(prob_m_log, "groupcase")
+```
+
+From this, we can see that the model suggests that the likelihood of survival for cases at `r TOI` years is `r reportProb(prob_m_weib, "case", "group")` and for controls it is estimated to be `r reportProb(prob_m_weib, "case", "group")`. This doesn't appear to match up with the logistic model. The logistic model, although uncertain, suggested that our controls had a lower probability of experiencing the event by `r TOI` years. So which is right?
+
+Since we made this data, we can know everything about it. I've waited until now to make this abundantly clear, but we are actually able to show the true survival probability at `r TOI` years by simply calculating this from the initial parameters used to create this data. I'll leave it as an exercise for you to compare the different approaches in terms of which did a better job of estimating this true value. 
+
+```{r true values for survival at t years}
+writeLines(paste0("control: ", round(exp(-(TOI / cont_scale) ^ cont_shape) * 100, 2), "%\n",
+                  "case:    ", round(exp(-(TOI / case_scale) ^ case_shape) * 100, 2), "%"))
+```
+
+Unsurprisingly, our model that used the correct distribution makes a better estimate for the true values. So, why did this happen? There was some slight of hand earlier, though I'm sure plenty of people would notice it. When defining the parameters for the simulation, I deliberately picked two shape parameters that would cause the hazard to cross over at some point for the two groups. It isn't hard to imagine circumstances in which this could happen; for instance, the exposed group (cases) could have a condition that comes with a high risk early on but if managed correctly can result in better outcomes for these people compared to a control group without adequate monitoring. The risk with using a logistic regression for this type of analysis is that the conclusions you make are biased by the time point selected, and the type of censoring present in the data. If we had modelled the survival at 5 years we may have had different conclusions as the ratio of the hazard was not constant over exposure time. In doing a logistic regression on these data, we remove nuance from our understanding of the data itself and could end up making inappropriate conclusions. 
+
+
+## A different time point
+
+If we look at @fig-weibCPDF, we can see that `r TOI` is roughly the point at which the hazard functions cross over. So what happens if we look at a different time point, say maybe half this so we have `r TOI/2` years observation instead? Annoyingly, we'll have to process the data again for the logistic regression and run the model again in order to get some results, but for the Weibull model we just need to get estimates for a different time point. So, let's re-run the logistic regression quick. 
+
+```{r set logistic mk2}
+TOI_2 <- TOI/2
+df_logi_2 <- df_model %>% 
+  filter(obsTime > TOI_2 | (!censored & obsTime < TOI_2)) %>% 
+  mutate(logiSurv = obsTime > TOI_2)
+
+
+m_log_2 <- brm(logiSurv ~ group, 
+               family = "bernoulli", 
+               data = df_logi_2, 
+               chains = 1, 
+               iter = 2000, 
+               warmup = 1000)
+```
+
+Now we can simply run what we did before to get the comparisons for the probability of survival until `r TOI_2` years for both models. 
+
+```{r survival at toi_2 years for logistic, warning = F}
+post_m_log_2 <- as_draws_df(m_log_2) %>% 
+  select(contains("b_")) %>% 
+  rowid_to_column(var = "iter")
+
+prob_m_log_2 <- post_m_log_2 %>% 
+  mutate(b_groupcase = b_Intercept + b_groupcase) %>% 
+  gather(contains("b_"), 
+         key = "Param", 
+         value = "logOdds") %>% 
+  mutate(Param = str_remove(Param, "b_"), 
+         prob = plogis(logOdds)) %>% 
+  group_by(Param) %>% 
+  mean_hdci(prob)
+
+paste("control:", reportProb(prob_m_log_2, "Intercept"))
+paste("case:   ", reportProb(prob_m_log_2, "groupcase"))
+```
+
+And now the Weibull distribution? 
+
+```{r weibull survival at TOI_2}
+prob_m_weib <- plt_cpdf_weib[["data"]] %>% 
+  filter(time == TOI_2)
+
+paste("control:", reportProb(prob_m_weib, "control", "group"))
+paste("case:   ", reportProb(prob_m_weib, "case", "group"))
+```
+
+And now the truth? 
+
+```{r true surv at TOI_2}
+paste0("control: ", round(exp(-(TOI_2 / cont_scale) ^ cont_shape) * 100, 2), "%")
+paste0("case:    ", round(exp(-(TOI_2 / case_scale) ^ case_shape) * 100, 2), "%")
+```
+
+At this time point, the logistic model isn't performing too poorly; however, do we really fancy running a model at each time point to estimate the hazard ratio to ensure that we have a constant ratio? I wouldn't think this would be the case. Further, we have also seen how the estimates for the likelihood of survival can be inaccurate. In the idea of transparency, I believe it is more robust to employ a survival analysis technique that can adequately account for censorship in the data as well as characterise the risk over time and detect non-proportional hazards. 
+
+In effect, from this analysis we can see that the choice of time point in the logistic regression can alter the conclusions drawn from the analysis. Having this fixed time point means we run the risk of making incorrect conclusions about the survival rates of different groups due to a almost _arbitrary_ choice about when we decide is the most interesting time point. Having a model that can account for censorship appropriately and also examine survival times is a much more suitable approach. 
+
+I can imagine one counter argument being that this approach is too heavy handed if we pick a time point that has very little to no censorship. Realistically, I guess this is a decent argument if you have a strong reason to believe that a particular time point is the most important aspect of the analysis. However, my counter question would be: do you really want to risk being wrong about the time point? And also, isn't it nice to use a slightly more sophisticated approach that can offer more detailed insights? These are kind of rhetorical questions, but feel free to disagree with me. 
+
+# Final thoughts 
+
+When trying to understand complex questions, we do sometimes have to use complex methods. Censorship in our data isn't something we want, and in an ideal world there would be no loss to follow up. However, we don't live in this ideal world and instead have to settle for decent _estimates_ of our measures and incomplete datasets. Additionally, even in an ideal world, looking at survival over time using these methods still offers more insight than a more simple logistic regression does. In my opinion, we should treat the questions we're asking with respect and attempt to answer them using the most appropriate methods. Settling for "_second best_" (perhaps not even second best, sometimes just flat out wrong) shouldn't be the end goal for any analyst. 
+
+Anyway, that's my understanding of survival analysis and the problems with applying logistic regression to censored data. Hopefully that's been interesting and helpful. When I have more concrete links, I'll add them to the bottom here, or maybe even make another post. 
+
+```{r}
+sessionInfo()
+```
+
+
+
+
+
+
+
+
+
+
+
+

@@ -8,6 +8,6 @@ subtitle: "Data analyst working at the University of Aberdeen and <br>NHS Grampi
 
 I am a researcher interested in using a whole host of statistical methods to answer all sorts of interesting (not always) questions. The work I do is all in R and so I thought to save me time I could put some of this on a website somewhere that other people might also find useful. 
 
-Currently, I'm employed as part of the [Epidemiology group](https://www.abdn.ac.uk/iahs/research/epidemiology/index.php), and the [Biostatistics and Health Data Science Group](https://www.abdn.ac.uk/iahs/research/biostatistics-and-health-data-sciences-3072.php) as a research fellow where I use Electronic Health Care records to answer questions of clinical interest
+Currently, I'm employed as part of the [Centre for Musculoskeletal and Pain Epidemiology](https://www.abdn.ac.uk/iahs/research/epidemiology/index.php), and the [Biostatistics and Health Data Science Group](https://www.abdn.ac.uk/iahs/research/biostatistics-and-health-data-sciences-3072.php) as a research fellow, and I'm also working with NHS Grampian as a data scientist. My day-to-day job involves using Electronic Health Care records to answer questions of clinical interest. 
 
 ::: 

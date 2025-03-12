@@ -8,6 +8,8 @@ website:
     tools:
       - icon: github
         href: https://github.com/warren-james
+      - icon: instagram
+        href: https://www.instagram.com/warrenrgjames/
     right:
       - href: index.qmd
         text: "Home"
