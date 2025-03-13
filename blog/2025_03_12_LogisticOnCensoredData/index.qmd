@@ -143,13 +143,8 @@ Looks good enough for our purposes. However, we haven't exactly added in any cen
 I'll do this by randomly sampling between a small number and the true survival time if someone was censored. Each person will have a 50% chance of being censored so it should be roughly even. Though this might be quite a high rate of censoring. We'll also be assuming that the censoring is uninformative and wouldn't mean we couldn't observe the event happening. Unfortunately, no one has found a cure for death, so I think we're safe to make this assumption, but it is necessary to consider whether a competing event could occur that would stop a subject from being able to experience the event of interest. 
 
 ```{r Add in censoring}
-# TODO: Maybe chance the censoring... it makes sense that both groups should have the same chance of being censored at 
-# all time points... currently it's based on survival time with one group haveing a lower survival time on average
 df_model <- df_model %>% 
   mutate(
-    # censored = sample(c(0, 1), nrow(.), replace = T),
-    # censTime = runif(nrow(.), .01, trueSurv),
-    # obsTime = ifelse(censored, censTime, trueSurv)
     censTime = runif(nrow(.), .01, .3 * max(trueSurv)),
     censored = as.numeric(censTime < trueSurv),
     obsTime = ifelse(censored, censTime, trueSurv)
@@ -433,7 +428,7 @@ I can imagine one counter argument being that this approach is too heavy handed 
 
 When trying to understand complex questions, we do sometimes have to use complex methods. Censorship in our data isn't something we want, and in an ideal world there would be no loss to follow up. However, we don't live in this ideal world and instead have to settle for decent _estimates_ of our measures and incomplete datasets. Additionally, even in an ideal world, looking at survival over time using these methods still offers more insight than a more simple logistic regression does. In my opinion, we should treat the questions we're asking with respect and attempt to answer them using the most appropriate methods. Settling for "_second best_" (perhaps not even second best, sometimes just flat out wrong) shouldn't be the end goal for any analyst. Additionally, isn't it important to know "when" events happen anyway? For example, we could have all the events in one group happen very early on while the other group had the events happen at random time points between the start and end of follow up? 
 
-Anyway, that's my understanding of survival analysis and the problems with applying logistic regression to censored data. Hopefully that's been interesting and helpful. A paper that's worth reading on this subject can be found [here](https://pmc.ncbi.nlm.nih.gov/articles/PMC4111957/#:~:text=One%20of%20the%20most%20important,the%20last%20and%20current%20visit.). They make a very good case for using survival analysis when approaching problems like this and illustrate why it's important that we care about this. There's a good line where they say that in reality, with enough follow up, all survival is 0%. If my work above did nothing to convince you it's important to care about the timing of events and censorship, then hopefully that one sentence is enough to convince you. 
+Anyway, that's my understanding of survival analysis and the problems with applying logistic regression to censored data. Hopefully that's been interesting and helpful. A paper that's worth reading on this subject can be found [here](https://pmc.ncbi.nlm.nih.gov/articles/PMC4111957/). They make a very good case for using survival analysis when approaching problems like this and illustrate why it's important that we care about this. There's a good line where they say that in reality, with enough follow up, all survival is 0%. If my work above did nothing to convince you it's important to care about the timing of events and censorship, then hopefully that one sentence is enough to convince you. 
 
 ```{r}
 sessionInfo()
