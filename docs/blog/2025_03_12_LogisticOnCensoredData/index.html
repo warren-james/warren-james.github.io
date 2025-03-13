@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Warren James">
-<meta name="dcterms.date" content="2025-06-13">
+<meta name="dcterms.date" content="2025-03-11">
 
 <title>The consequence of ignoring censorship – Warren James</title>
 <style>
@@ -228,7 +228,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 13, 2025</p>
+      <p class="date">March 11, 2025</p>
     </div>
   </div>
   
@@ -471,8 +471,8 @@ Note
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 4.7e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.47 seconds.
+Chain 1: Gradient evaluation took 5.7e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.57 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -489,9 +489,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.101 seconds (Warm-up)
-Chain 1:                0.102 seconds (Sampling)
-Chain 1:                0.203 seconds (Total)
+Chain 1:  Elapsed Time: 0.098 seconds (Warm-up)
+Chain 1:                0.092 seconds (Sampling)
+Chain 1:                0.19 seconds (Total)
 Chain 1: </code></pre>
 </div>
 </div>
@@ -534,8 +534,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000582 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 5.82 seconds.
+Chain 1: Gradient evaluation took 0.000624 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.24 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -552,9 +552,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 2.73 seconds (Warm-up)
-Chain 1:                2.97 seconds (Sampling)
-Chain 1:                5.7 seconds (Total)
+Chain 1:  Elapsed Time: 2.336 seconds (Warm-up)
+Chain 1:                2.457 seconds (Sampling)
+Chain 1:                4.793 seconds (Total)
 Chain 1: </code></pre>
 </div>
 </div>
@@ -675,8 +675,8 @@ case:    36.79%</code></pre>
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 8.4e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.84 seconds.
+Chain 1: Gradient evaluation took 4.6e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.46 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -693,9 +693,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.157 seconds (Warm-up)
-Chain 1:                0.117 seconds (Sampling)
-Chain 1:                0.274 seconds (Total)
+Chain 1:  Elapsed Time: 0.108 seconds (Warm-up)
+Chain 1:                0.111 seconds (Sampling)
+Chain 1:                0.219 seconds (Total)
 Chain 1: </code></pre>
 </div>
 </div>
@@ -756,8 +756,8 @@ Chain 1: </code></pre>
 </section>
 <section id="final-thoughts" class="level1">
 <h1>Final thoughts</h1>
-<p>When trying to understand complex questions, we do sometimes have to use complex methods. Censorship in our data isn’t something we want, and in an ideal world there would be no loss to follow up. However, we don’t live in this ideal world and instead have to settle for decent <em>estimates</em> of our measures and incomplete datasets. Additionally, even in an ideal world, looking at survival over time using these methods still offers more insight than a more simple logistic regression does. In my opinion, we should treat the questions we’re asking with respect and attempt to answer them using the most appropriate methods. Settling for “<em>second best</em>” (perhaps not even second best, sometimes just flat out wrong) shouldn’t be the end goal for any analyst.</p>
-<p>Anyway, that’s my understanding of survival analysis and the problems with applying logistic regression to censored data. Hopefully that’s been interesting and helpful. When I have more concrete links, I’ll add them to the bottom here, or maybe even make another post.</p>
+<p>When trying to understand complex questions, we do sometimes have to use complex methods. Censorship in our data isn’t something we want, and in an ideal world there would be no loss to follow up. However, we don’t live in this ideal world and instead have to settle for decent <em>estimates</em> of our measures and incomplete datasets. Additionally, even in an ideal world, looking at survival over time using these methods still offers more insight than a more simple logistic regression does. In my opinion, we should treat the questions we’re asking with respect and attempt to answer them using the most appropriate methods. Settling for “<em>second best</em>” (perhaps not even second best, sometimes just flat out wrong) shouldn’t be the end goal for any analyst. Additionally, isn’t it important to know “when” events happen anyway? For example, we could have all the events in one group happen very early on while the other group had the events happen at random time points between the start and end of follow up?</p>
+<p>Anyway, that’s my understanding of survival analysis and the problems with applying logistic regression to censored data. Hopefully that’s been interesting and helpful. A paper that’s worth reading on this subject can be found <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4111957/#:~:text=One%20of%20the%20most%20important,the%20last%20and%20current%20visit.">here</a>. They make a very good case for using survival analysis when approaching problems like this and illustrate why it’s important that we care about this. There’s a good line where they say that in reality, with enough follow up, all survival is 0%. If my work above did nothing to convince you it’s important to care about the timing of events and censorship, then hopefully that one sentence is enough to convince you.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1383,7 +1383,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
