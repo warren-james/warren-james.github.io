@@ -240,6 +240,7 @@ window.Quarto = {
 </header>
 
 
+<p>The title is perhaps misleading, I’m not about to discuss anything about censorship in terms of politics. For better or worse, this is a post about censorship in the statistical sense of the word. So, depending on your view point, this is maybe a more exciting topic? Maybe it doesn’t quite make people feel quite as animated, but then again maybe it should. Censorship in statistics is a genuinely interesting problem to consider, and has some fairly important consequences if ignored or not handled with care.</p>
 <section id="library" class="level1">
 <h1>Library</h1>
 <p>Before we go anywhere, here is a pretty standard set of packages, it’s not like we’re doing anything insane just now.</p>
@@ -451,7 +452,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Just wanted to highlight that I have many grievences with this approach, if that wasn’t immediately clear.</p>
+<p>Just wanted to highlight that I have many grievances with this approach, if that wasn’t immediately clear.</p>
 </div>
 </div>
 <p>Now we can fit a simple logistic regression to these data to get the “probability of survival at 5 years”</p>
@@ -463,11 +464,26 @@ Note
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">iter =</span> <span class="dv">2000</span>, </span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">warmup =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
+<pre><code>Running "C:/PROGRA~1/R/R-44~1.2/bin/x64/Rcmd.exe" SHLIB foo.c
+using C compiler: 'gcc.exe (GCC) 13.3.0'
+gcc  -I"C:/PROGRA~1/R/R-44~1.2/include" -DNDEBUG   -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/Rcpp/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/unsupported"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/BH/include" -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/src/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppParallel/include/" -DRCPP_PARALLEL_USE_TBB=1 -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include "C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/stan/math/prim/fun/Eigen.hpp"  -std=c++1y    -I"C:/rtools44/x86_64-w64-mingw32.static.posix/include"     -O2 -Wall  -mfpmath=sse -msse2 -mstackrealign  -c foo.c -o foo.o
+cc1.exe: warning: command-line option '-std=c++14' is valid for C++/ObjC++ but not for C
+In file included from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/Core:19,
+                 from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/Dense:1,
+                 from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22,
+                 from &lt;command-line&gt;:
+C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: cmath: No such file or directory
+  679 | #include &lt;cmath&gt;
+      |          ^~~~~~~
+compilation terminated.
+make: *** [C:/PROGRA~1/R/R-44~1.2/etc/x64/Makeconf:289: foo.o] Error 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 4.5e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.45 seconds.
+Chain 1: Gradient evaluation took 5.2e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.52 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -484,15 +500,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.093 seconds (Warm-up)
-Chain 1:                0.091 seconds (Sampling)
-Chain 1:                0.184 seconds (Total)
+Chain 1:  Elapsed Time: 0.134 seconds (Warm-up)
+Chain 1:                0.107 seconds (Sampling)
+Chain 1:                0.241 seconds (Total)
 Chain 1: </code></pre>
 </div>
 </div>
 <p>Now we’ve fit the model, let’s have a look at the output and see what we think</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: bernoulli 
   Links: mu = logit 
@@ -518,19 +534,34 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>We’ll be fitting a Weibull distribution as we know that this is how the data were generated. In the real world we wouldn’t know this, so we would fit several models and look for different specifications, but that isn’t the point in this document. I’m simply trying to demonstrate the issue with ignoring censoring in these sorts of data.</p>
 <p>So, let’s fit the model</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m_weib <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(obsTime <span class="sc">|</span> <span class="fu">cens</span>(censored) <span class="sc">~</span> group, </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                 shape <span class="sc">~</span> group), </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="st">"weibull"</span>, </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> df_model, </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">iter =</span> <span class="dv">2000</span>, </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">warmup =</span> <span class="dv">1000</span>, </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">chains =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m_weib <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(obsTime <span class="sc">|</span> <span class="fu">cens</span>(censored) <span class="sc">~</span> group, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                 shape <span class="sc">~</span> group), </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="st">"weibull"</span>, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> df_model, </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">iter =</span> <span class="dv">2000</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">warmup =</span> <span class="dv">1000</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">chains =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running "C:/PROGRA~1/R/R-44~1.2/bin/x64/Rcmd.exe" SHLIB foo.c
+using C compiler: 'gcc.exe (GCC) 13.3.0'
+gcc  -I"C:/PROGRA~1/R/R-44~1.2/include" -DNDEBUG   -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/Rcpp/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/unsupported"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/BH/include" -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/src/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppParallel/include/" -DRCPP_PARALLEL_USE_TBB=1 -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include "C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/stan/math/prim/fun/Eigen.hpp"  -std=c++1y    -I"C:/rtools44/x86_64-w64-mingw32.static.posix/include"     -O2 -Wall  -mfpmath=sse -msse2 -mstackrealign  -c foo.c -o foo.o
+cc1.exe: warning: command-line option '-std=c++14' is valid for C++/ObjC++ but not for C
+In file included from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/Core:19,
+                 from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/Dense:1,
+                 from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22,
+                 from &lt;command-line&gt;:
+C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: cmath: No such file or directory
+  679 | #include &lt;cmath&gt;
+      |          ^~~~~~~
+compilation terminated.
+make: *** [C:/PROGRA~1/R/R-44~1.2/etc/x64/Makeconf:289: foo.o] Error 1</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000435 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 4.35 seconds.
+Chain 1: Gradient evaluation took 0.000499 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 4.99 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -547,9 +578,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 2.211 seconds (Warm-up)
-Chain 1:                2.257 seconds (Sampling)
-Chain 1:                4.468 seconds (Total)
+Chain 1:  Elapsed Time: 2.534 seconds (Warm-up)
+Chain 1:                2.584 seconds (Sampling)
+Chain 1:                5.118 seconds (Total)
 Chain 1: </code></pre>
 </div>
 </div>
@@ -557,42 +588,42 @@ Chain 1: </code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert from brms parameterisation </span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>get_scale <span class="ot">&lt;-</span> <span class="cf">function</span>(mu, shape){</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(mu)<span class="sc">/</span><span class="fu">gamma</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">exp</span>(shape))</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># get weib post</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>post_weib <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(m_weib) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"b_"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">b_groupcase =</span> b_groupcase <span class="sc">+</span> b_Intercept, </span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">b_shape_groupcase =</span> b_shape_Intercept <span class="sc">+</span> b_shape_groupcase) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">"iter"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="fu">contains</span>(<span class="st">"b_"</span>), </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">key =</span> <span class="st">"Param"</span>, </span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">value =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">paramType =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"shape"</span>, Param), <span class="st">"shape"</span>, <span class="st">"mu"</span>), </span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">group =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"groupcase"</span>, Param), <span class="st">"case"</span>, <span class="st">"control"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Param) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(paramType, value) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">scale =</span> <span class="fu">get_scale</span>(mu, shape)) </span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>pltData_weib <span class="ot">&lt;-</span> post_weib <span class="sc">%&gt;%</span> </span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">time =</span> <span class="fu">seq</span>(.<span class="dv">1</span>, <span class="fu">round</span>(<span class="fu">max</span>(df_model<span class="sc">$</span>trueSurv)), .<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">dweibull</span>(time, <span class="fu">exp</span>(shape), scale)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, time) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean_hdci</span>(prob)</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plt_trueSurv_withHist <span class="sc">+</span> </span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> pltData_weib, </span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">y =</span> prob, <span class="at">x =</span> time, </span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymin =</span> .lower, <span class="at">ymax =</span> .upper, </span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> group), </span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">"transparent"</span>, </span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pltData_weib, </span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> prob, <span class="at">x =</span> time), </span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert from brms parameterisation </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>get_scale <span class="ot">&lt;-</span> <span class="cf">function</span>(mu, shape){</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(mu)<span class="sc">/</span><span class="fu">gamma</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">exp</span>(shape))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># get weib post</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>post_weib <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(m_weib) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"b_"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">b_groupcase =</span> b_groupcase <span class="sc">+</span> b_Intercept, </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">b_shape_groupcase =</span> b_shape_Intercept <span class="sc">+</span> b_shape_groupcase) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">"iter"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="fu">contains</span>(<span class="st">"b_"</span>), </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">key =</span> <span class="st">"Param"</span>, </span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">value =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">paramType =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"shape"</span>, Param), <span class="st">"shape"</span>, <span class="st">"mu"</span>), </span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">group =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"groupcase"</span>, Param), <span class="st">"case"</span>, <span class="st">"control"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Param) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(paramType, value) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">scale =</span> <span class="fu">get_scale</span>(mu, shape)) </span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>pltData_weib <span class="ot">&lt;-</span> post_weib <span class="sc">%&gt;%</span> </span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">time =</span> <span class="fu">seq</span>(.<span class="dv">1</span>, <span class="fu">round</span>(<span class="fu">max</span>(df_model<span class="sc">$</span>trueSurv)), .<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">dweibull</span>(time, <span class="fu">exp</span>(shape), scale)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, time) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean_hdci</span>(prob)</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>plt_trueSurv_withHist <span class="sc">+</span> </span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> pltData_weib, </span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">y =</span> prob, <span class="at">x =</span> time, </span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymin =</span> .lower, <span class="at">ymax =</span> .upper, </span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> group), </span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">"transparent"</span>, </span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pltData_weib, </span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> prob, <span class="at">x =</span> time), </span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-weibPredictions" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -611,19 +642,19 @@ Figure&nbsp;5: Plot showing the true survival times as solid lines, with a histo
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt_cpdf_weib <span class="ot">&lt;-</span> post_weib <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">time =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">round</span>(<span class="fu">max</span>(df_model<span class="sc">$</span>trueSurv))) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pweibull</span>(time, <span class="fu">exp</span>(shape), scale)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, time) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean_hdci</span>(prob) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, prob, <span class="at">colour =</span> group, <span class="at">fill =</span> group)) <span class="sc">+</span> </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linetype =</span> <span class="st">"longdash"</span>) <span class="sc">+</span> </span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> .lower, <span class="at">ymax =</span> .upper), </span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> .<span class="dv">3</span>, </span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">"transparent"</span>) <span class="sc">+</span> </span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_flat</span>() <span class="sc">+</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_flat</span>() </span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>plt_cpdf_weib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plt_cpdf_weib <span class="ot">&lt;-</span> post_weib <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">time =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">round</span>(<span class="fu">max</span>(df_model<span class="sc">$</span>trueSurv))) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pweibull</span>(time, <span class="fu">exp</span>(shape), scale)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, time) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean_hdci</span>(prob) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, prob, <span class="at">colour =</span> group, <span class="at">fill =</span> group)) <span class="sc">+</span> </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linetype =</span> <span class="st">"longdash"</span>) <span class="sc">+</span> </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> .lower, <span class="at">ymax =</span> .upper), </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> .<span class="dv">3</span>, </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">"transparent"</span>) <span class="sc">+</span> </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_flat</span>() <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_flat</span>() </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>plt_cpdf_weib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-weibCPDF" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -641,8 +672,8 @@ Figure&nbsp;6: This shows the inverse of the cumulative density for the weibull 
 <p>From this, we can see that the model suggests that the likelihood of survival for cases at 10 years is 37.46% [32.71% | 41.91%] and for controls it is estimated to be 37.46% [32.71% | 41.91%]. This doesn’t appear to match up with the logistic model. The logistic model, although uncertain, suggested that our controls had a lower probability of experiencing the event by 10 years. So which is right?</p>
 <p>Since we made this data, we can know everything about it. I’ve waited until now to make this abundantly clear, but we are actually able to show the true survival probability at 10 years by simply calculating this from the initial parameters used to create this data. I’ll leave it as an exercise for you to compare the different approaches in terms of which did a better job of estimating this true value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">paste0</span>(<span class="st">"control: "</span>, <span class="fu">round</span>(<span class="fu">exp</span>(<span class="sc">-</span>(TOI <span class="sc">/</span> cont_scale) <span class="sc">^</span> cont_shape) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"case:    "</span>, <span class="fu">round</span>(<span class="fu">exp</span>(<span class="sc">-</span>(TOI <span class="sc">/</span> case_scale) <span class="sc">^</span> case_shape) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">paste0</span>(<span class="st">"control: "</span>, <span class="fu">round</span>(<span class="fu">exp</span>(<span class="sc">-</span>(TOI <span class="sc">/</span> cont_scale) <span class="sc">^</span> cont_shape) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"case:    "</span>, <span class="fu">round</span>(<span class="fu">exp</span>(<span class="sc">-</span>(TOI <span class="sc">/</span> case_scale) <span class="sc">^</span> case_shape) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>control: 36.79%
 case:    36.79%</code></pre>
@@ -654,24 +685,39 @@ case:    36.79%</code></pre>
 <h2 class="anchored" data-anchor-id="a-different-time-point">A different time point</h2>
 <p>If we look at <a href="#fig-weibCPDF" class="quarto-xref">Figure&nbsp;6</a>, we can see that 10 is roughly the point at which the hazard functions cross over. So what happens if we look at a different time point, say maybe half this so we have 5 years observation instead? Annoyingly, we’ll have to process the data again for the logistic regression and run the model again in order to get some results, but for the Weibull model we just need to get estimates for a different time point. So, let’s re-run the logistic regression quick.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>TOI_2 <span class="ot">&lt;-</span> TOI<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df_logi_2 <span class="ot">&lt;-</span> df_model <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(obsTime <span class="sc">&gt;</span> TOI_2 <span class="sc">|</span> (<span class="sc">!</span>censored <span class="sc">&amp;</span> obsTime <span class="sc">&lt;</span> TOI_2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logiSurv =</span> obsTime <span class="sc">&gt;</span> TOI_2)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>m_log_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(logiSurv <span class="sc">~</span> group, </span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> <span class="st">"bernoulli"</span>, </span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> df_logi_2, </span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">chains =</span> <span class="dv">1</span>, </span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">iter =</span> <span class="dv">2000</span>, </span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">warmup =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>TOI_2 <span class="ot">&lt;-</span> TOI<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df_logi_2 <span class="ot">&lt;-</span> df_model <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(obsTime <span class="sc">&gt;</span> TOI_2 <span class="sc">|</span> (<span class="sc">!</span>censored <span class="sc">&amp;</span> obsTime <span class="sc">&lt;</span> TOI_2)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logiSurv =</span> obsTime <span class="sc">&gt;</span> TOI_2)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>m_log_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(logiSurv <span class="sc">~</span> group, </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> <span class="st">"bernoulli"</span>, </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> df_logi_2, </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">chains =</span> <span class="dv">1</span>, </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">iter =</span> <span class="dv">2000</span>, </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">warmup =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running "C:/PROGRA~1/R/R-44~1.2/bin/x64/Rcmd.exe" SHLIB foo.c
+using C compiler: 'gcc.exe (GCC) 13.3.0'
+gcc  -I"C:/PROGRA~1/R/R-44~1.2/include" -DNDEBUG   -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/Rcpp/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/unsupported"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/BH/include" -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/src/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/"  -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppParallel/include/" -DRCPP_PARALLEL_USE_TBB=1 -I"C:/Users/s01wj1/AppData/Local/R/win-library/4.4/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include "C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/stan/math/prim/fun/Eigen.hpp"  -std=c++1y    -I"C:/rtools44/x86_64-w64-mingw32.static.posix/include"     -O2 -Wall  -mfpmath=sse -msse2 -mstackrealign  -c foo.c -o foo.o
+cc1.exe: warning: command-line option '-std=c++14' is valid for C++/ObjC++ but not for C
+In file included from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/Core:19,
+                 from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/Dense:1,
+                 from C:/Users/s01wj1/AppData/Local/R/win-library/4.4/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22,
+                 from &lt;command-line&gt;:
+C:/Users/s01wj1/AppData/Local/R/win-library/4.4/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: cmath: No such file or directory
+  679 | #include &lt;cmath&gt;
+      |          ^~~~~~~
+compilation terminated.
+make: *** [C:/PROGRA~1/R/R-44~1.2/etc/x64/Makeconf:289: foo.o] Error 1</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 4.1e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.41 seconds.
+Chain 1: Gradient evaluation took 4.8e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.48 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -688,58 +734,58 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.114 seconds (Warm-up)
-Chain 1:                0.096 seconds (Sampling)
-Chain 1:                0.21 seconds (Total)
+Chain 1:  Elapsed Time: 0.106 seconds (Warm-up)
+Chain 1:                0.098 seconds (Sampling)
+Chain 1:                0.204 seconds (Total)
 Chain 1: </code></pre>
 </div>
 </div>
 <p>Now we can simply run what we did before to get the comparisons for the probability of survival until 5 years for both models.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>post_m_log_2 <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(m_log_2) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"b_"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">"iter"</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>prob_m_log_2 <span class="ot">&lt;-</span> post_m_log_2 <span class="sc">%&gt;%</span> </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">b_groupcase =</span> b_Intercept <span class="sc">+</span> b_groupcase) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="fu">contains</span>(<span class="st">"b_"</span>), </span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">key =</span> <span class="st">"Param"</span>, </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">value =</span> <span class="st">"logOdds"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Param =</span> <span class="fu">str_remove</span>(Param, <span class="st">"b_"</span>), </span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">prob =</span> <span class="fu">plogis</span>(logOdds)) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Param) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean_hdci</span>(prob)</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"control:"</span>, <span class="fu">reportProb</span>(prob_m_log_2, <span class="st">"Intercept"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>post_m_log_2 <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(m_log_2) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"b_"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">"iter"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>prob_m_log_2 <span class="ot">&lt;-</span> post_m_log_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">b_groupcase =</span> b_Intercept <span class="sc">+</span> b_groupcase) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="fu">contains</span>(<span class="st">"b_"</span>), </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">key =</span> <span class="st">"Param"</span>, </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">value =</span> <span class="st">"logOdds"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Param =</span> <span class="fu">str_remove</span>(Param, <span class="st">"b_"</span>), </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">prob =</span> <span class="fu">plogis</span>(logOdds)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Param) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean_hdci</span>(prob)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"control:"</span>, <span class="fu">reportProb</span>(prob_m_log_2, <span class="st">"Intercept"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "control: 74.04% [69.19% | 78.28%]"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"case:   "</span>, <span class="fu">reportProb</span>(prob_m_log_2, <span class="st">"groupcase"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"case:   "</span>, <span class="fu">reportProb</span>(prob_m_log_2, <span class="st">"groupcase"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "case:    54.28% [48.94% | 59.40%]"</code></pre>
 </div>
 </div>
 <p>And now the Weibull distribution?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>prob_m_weib <span class="ot">&lt;-</span> plt_cpdf_weib[[<span class="st">"data"</span>]] <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">==</span> TOI_2)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"control:"</span>, <span class="fu">reportProb</span>(prob_m_weib, <span class="st">"control"</span>, <span class="st">"group"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>prob_m_weib <span class="ot">&lt;-</span> plt_cpdf_weib[[<span class="st">"data"</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">==</span> TOI_2)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"control:"</span>, <span class="fu">reportProb</span>(prob_m_weib, <span class="st">"control"</span>, <span class="st">"group"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "control: 76.70% [73.51% | 80.52%]"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"case:   "</span>, <span class="fu">reportProb</span>(prob_m_weib, <span class="st">"case"</span>, <span class="st">"group"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"case:   "</span>, <span class="fu">reportProb</span>(prob_m_weib, <span class="st">"case"</span>, <span class="st">"group"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "case:    57.52% [53.73% | 62.01%]"</code></pre>
 </div>
 </div>
 <p>And now the truth?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"control: "</span>, <span class="fu">round</span>(<span class="fu">exp</span>(<span class="sc">-</span>(TOI_2 <span class="sc">/</span> cont_scale) <span class="sc">^</span> cont_shape) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"control: "</span>, <span class="fu">round</span>(<span class="fu">exp</span>(<span class="sc">-</span>(TOI_2 <span class="sc">/</span> cont_scale) <span class="sc">^</span> cont_shape) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "control: 77.88%"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"case:    "</span>, <span class="fu">round</span>(<span class="fu">exp</span>(<span class="sc">-</span>(TOI_2 <span class="sc">/</span> case_scale) <span class="sc">^</span> case_shape) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"case:    "</span>, <span class="fu">round</span>(<span class="fu">exp</span>(<span class="sc">-</span>(TOI_2 <span class="sc">/</span> case_scale) <span class="sc">^</span> case_shape) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "case:    58.52%"</code></pre>
 </div>
@@ -754,7 +800,7 @@ Chain 1: </code></pre>
 <p>When trying to understand complex questions, we do sometimes have to use complex methods. Censorship in our data isn’t something we want, and in an ideal world there would be no loss to follow up. However, we don’t live in this ideal world and instead have to settle for decent <em>estimates</em> of our measures and incomplete datasets. Additionally, even in an ideal world, looking at survival over time using these methods still offers more insight than a more simple logistic regression does. In my opinion, we should treat the questions we’re asking with respect and attempt to answer them using the most appropriate methods. Settling for “<em>second best</em>” (perhaps not even second best, sometimes just flat out wrong) shouldn’t be the end goal for any analyst. Additionally, isn’t it important to know “when” events happen anyway? For example, we could have all the events in one group happen very early on while the other group had the events happen at random time points between the start and end of follow up?</p>
 <p>Anyway, that’s my understanding of survival analysis and the problems with applying logistic regression to censored data. Hopefully that’s been interesting and helpful. A paper that’s worth reading on this subject can be found <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4111957/">here</a>. They make a very good case for using survival analysis when approaching problems like this and illustrate why it’s important that we care about this. There’s a good line where they say that in reality, with enough follow up, all survival is 0%. If my work above did nothing to convince you it’s important to care about the timing of events and censorship, then hopefully that one sentence is enough to convince you.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.4.2 (2024-10-31 ucrt)
 Platform: x86_64-w64-mingw32/x64
@@ -777,35 +823,36 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] see_0.10.0      brms_2.22.9     Rcpp_1.0.14     tidybayes_3.0.7
+ [1] see_0.10.0      brms_2.22.11    Rcpp_1.0.14     tidybayes_3.0.7
  [5] lubridate_1.9.4 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
  [9] purrr_1.0.4     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
-[13] ggplot2_3.5.1   tidyverse_2.0.0
+[13] ggplot2_3.5.2   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6          tensorA_0.36.2.1      QuickJSR_1.5.1       
- [4] xfun_0.51             inline_0.3.21         lattice_0.22-6       
- [7] tzdb_0.4.0            vctrs_0.6.5           tools_4.4.2          
-[10] generics_0.1.3        stats4_4.4.2          parallel_4.4.2       
-[13] pkgconfig_2.0.3       Matrix_1.7-1          checkmate_2.3.2      
-[16] distributional_0.5.0  RcppParallel_5.1.10   lifecycle_1.0.4      
-[19] compiler_4.4.2        farver_2.1.2          Brobdingnag_1.2-9    
-[22] munsell_0.5.1         codetools_0.2-20      htmltools_0.5.8.1    
-[25] bayesplot_1.11.1.9000 yaml_2.3.10           pillar_1.10.1        
-[28] arrayhelpers_1.1-0    StanHeaders_2.32.10   bridgesampling_1.1-2 
-[31] abind_1.4-8           nlme_3.1-166          rstan_2.32.6         
-[34] posterior_1.6.0.9000  tidyselect_1.2.1      digest_0.6.37        
-[37] svUnit_1.0.6          mvtnorm_1.3-3         stringi_1.8.4        
-[40] reshape2_1.4.4        labeling_0.4.3        fastmap_1.2.0        
-[43] grid_4.4.2            colorspace_2.1-1      cli_3.6.4            
-[46] magrittr_2.0.3        loo_2.8.0.9000        pkgbuild_1.4.6       
-[49] withr_3.0.2           scales_1.3.0          backports_1.5.0      
-[52] timechange_0.3.0      rmarkdown_2.29        matrixStats_1.5.0    
-[55] gridExtra_2.3         hms_1.1.3             coda_0.19-4.1        
-[58] evaluate_1.0.3        knitr_1.49            ggdist_3.3.2         
-[61] rstantools_2.4.0.9000 rlang_1.1.5           glue_1.8.0           
-[64] rstudioapi_0.17.1     jsonlite_1.9.0        plyr_1.8.9           
-[67] R6_2.6.1             </code></pre>
+ [1] gtable_0.3.6          tensorA_0.36.2.1      QuickJSR_1.7.0       
+ [4] xfun_0.51             processx_3.8.6        inline_0.3.21        
+ [7] lattice_0.22-6        callr_3.7.6           tzdb_0.4.0           
+[10] ps_1.9.0              vctrs_0.6.5           tools_4.4.2          
+[13] generics_0.1.3        stats4_4.4.2          parallel_4.4.2       
+[16] pkgconfig_2.0.3       Matrix_1.7-1          checkmate_2.3.2      
+[19] distributional_0.5.0  RcppParallel_5.1.10   lifecycle_1.0.4      
+[22] compiler_4.4.2        farver_2.1.2          Brobdingnag_1.2-9    
+[25] munsell_0.5.1         codetools_0.2-20      htmltools_0.5.8.1    
+[28] bayesplot_1.12.0      yaml_2.3.10           pillar_1.10.2        
+[31] arrayhelpers_1.1-0    StanHeaders_2.32.10   bridgesampling_1.1-2 
+[34] abind_1.4-8           nlme_3.1-166          rstan_2.32.7         
+[37] posterior_1.6.1       tidyselect_1.2.1      digest_0.6.37        
+[40] svUnit_1.0.6          mvtnorm_1.3-3         stringi_1.8.7        
+[43] reshape2_1.4.4        labeling_0.4.3        fastmap_1.2.0        
+[46] grid_4.4.2            colorspace_2.1-1      cli_3.6.4            
+[49] magrittr_2.0.3        loo_2.8.0.9000        pkgbuild_1.4.7       
+[52] withr_3.0.2           scales_1.3.0          backports_1.5.0      
+[55] timechange_0.3.0      rmarkdown_2.29        matrixStats_1.5.0    
+[58] gridExtra_2.3         hms_1.1.3             coda_0.19-4.1        
+[61] evaluate_1.0.3        knitr_1.49            ggdist_3.3.2         
+[64] rstantools_2.4.0.9000 rlang_1.1.5           glue_1.8.0           
+[67] rstudioapi_0.17.1     jsonlite_1.9.0        plyr_1.8.9           
+[70] R6_2.6.1             </code></pre>
 </div>
 </div>
 
@@ -1385,7 +1432,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","loop":false,"selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

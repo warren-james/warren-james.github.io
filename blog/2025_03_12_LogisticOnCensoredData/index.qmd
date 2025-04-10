@@ -19,6 +19,8 @@ execute:
   message: false
 ---
 
+The title is perhaps misleading, I'm not about to discuss anything about censorship in terms of politics. For better or worse, this is a post about censorship in the statistical sense of the word. So, depending on your view point, this is maybe a more exciting topic? Maybe it doesn't quite make people feel quite as animated, but then again maybe it should. Censorship in statistics is a genuinely interesting problem to consider, and has some fairly important consequences if ignored or not handled with care. 
+
 # Library 
 
 Before we go anywhere, here is a pretty standard set of packages, it's not like we're doing anything insane just now. 
@@ -197,7 +199,7 @@ df_logi <- df_model %>%
 The code above simply keeps people that had an observed time that was greater than the Time of Interest (`TOI`) or those that had experienced the event before the `TOI`. We then say people were alive if they were in the study longer then the TOI. Sounds simple, but isn't a great use of data. In this instance we have had to remove `r paste0((100 - (nrow(df_logi) / nrow(df_model)) * 100), "%")` of our dataset. We also have people that experienced the event almost immediately after the `TOI`, but we're ignoring that for this analysis. 
 
 :::{.callout-note}
-Just wanted to highlight that I have many grievences with this approach, if that wasn't immediately clear. 
+Just wanted to highlight that I have many grievances with this approach, if that wasn't immediately clear. 
 :::
 
 Now we can fit a simple logistic regression to these data to get the "probability of survival at 5 years"
