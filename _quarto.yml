@@ -19,6 +19,8 @@ website:
         href: blog/index.qmd
       - href: supMat/index.qmd
         text: "Supplementary Materials"
+      - href: papers/index.qmd
+        text: "Papers"
 
 format:
   html:
@@ -28,6 +30,8 @@ format:
       dark: 
         - superhero
     lightbox: true
+    link-external-icon: true
+    link-external-newwindow: true
    # css: styles.css
    # toc: true
 

@@ -1,0 +1,16 @@
+---
+title: "Papers"
+---
+
+Here's a list of papers I have written or been involved in. This page will hopefully look prettier after I've had a think about how best to show this sort of information. 
+
+
+- __James, W. R.__, Reuther, J., Angus, E., Clarke, A. D., & Hunt, A. R. (2019). Inefficient eye movements: Gamification improves task execution, but not fixation strategy. Vision, 3(3), 48. [doi](https://doi.org/10.3390/vision3030048)
+
+- Clarke, A. D., Irons, J. L., __James, W.__, Leber, A. B., & Hunt, A. R. (2022). Stable individual differences in strategies within, but not between, visual search tasks. Quarterly Journal of Experimental Psychology, 75(2), 289-296. doi: https://doi.org/10.1177/1747021820929190
+
+- __James, W.__, Hunt, A. R., & Clarke, A. D. (2023). Six of one, half dozen of the other: Suboptimal prioritizing for equal and unequal alternatives. Memory & Cognition, 51(2), 486-503. [doi](https://doi.org/10.3758/s13421-022-01356-5)
+
+- Claydon, J., __James, W. R.__, Clarke, A. D., & Hunt, A. R. (2024). The role of framing, agency and uncertainty in a focus-divide dilemma. Memory & Cognition, 52(3), 574-594. [doi](https://doi.org/10.3758/s13421-023-01484-6)
+
+- Hollick, R. J., __James, W. R.__, Nicoll, A., Locock, L., Black, C., Dhaun, N., ... & Basu, N. (2024). Identifying key health system components associated with improved outcomes to inform the re-configuration of services for adults with rare autoimmune rheumatic diseases: a mixed-methods study. The Lancet Rheumatology, 6(6), e361-e373. [doi](https://doi.org/10.1016/S2665-9913(24)00082-1)
