@@ -2,7 +2,7 @@
 title: "Warren James, PhD"
 pagetitle: "Warren James"
 subtitle: "Data analyst working at the University of Aberdeen and NHS Grampian"
-image: assets/img/test.png
+image: assets/img/temp.png
 
 about: 
   template: solana
