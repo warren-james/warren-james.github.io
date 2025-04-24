@@ -28,14 +28,13 @@ format:
       light: 
         - cosmo
       dark: 
-        - superhero
+        - superhero # I want to make my own one at some point... Would be nicer
     lightbox: true
     link-external-icon: true
     link-external-newwindow: true
    # css: styles.css
    # toc: true
 
-# include-in-header: move-toggle.Rhtml
 
 editor: source
 

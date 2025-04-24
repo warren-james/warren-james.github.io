@@ -1,0 +1,18 @@
+/* social links: block of links */
+.about-entity .about-links {
+  /*justify-content: flex-end !important;*/
+  column-gap: 0em !important;
+  font-size: 1.2em !important;
+}
+
+/* social links for individual links*/
+.about-entity .about-link {
+  padding: 0.25em 0.25em !important;
+  border: none !important;
+}
+
+/* image */
+.about-image {
+  margin-top: -2em;
+  padding: 0 2em 0em 0;
+}

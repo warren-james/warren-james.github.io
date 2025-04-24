@@ -14,3 +14,5 @@ Here's a list of papers I have written or been involved in. This page will hopef
 - Claydon, J., __James, W. R.__, Clarke, A. D., & Hunt, A. R. (2024). The role of framing, agency and uncertainty in a focus-divide dilemma. Memory & Cognition, 52(3), 574-594. [doi](https://doi.org/10.3758/s13421-023-01484-6)
 
 - Hollick, R. J., __James, W. R.__, Nicoll, A., Locock, L., Black, C., Dhaun, N., ... & Basu, N. (2024). Identifying key health system components associated with improved outcomes to inform the re-configuration of services for adults with rare autoimmune rheumatic diseases: a mixed-methods study. The Lancet Rheumatology, 6(6), e361-e373. [doi](https://doi.org/10.1016/S2665-9913(24)00082-1)
+
+- __James, W.__, Black, C., Basu, N., Little, M. A., & Hollick, R. (2024). Sociodemographic Factors Associated with Clinic Non-attendance and Unscheduled Emergency Care Episodes in ANCA-associated Vasculitis. ACR Convergence 2024, conference abstract. [link](https://acrabstracts.org/abstract/sociodemographic-factors-associated-with-clinic-non-attendance-and-unscheduled-emergency-care-episodes-in-anca-associated-vasculitis/)

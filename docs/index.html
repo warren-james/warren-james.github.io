@@ -33,7 +33,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
@@ -68,11 +67,12 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link rel="stylesheet" href="assets/index.css">
 
 
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -120,37 +120,47 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full column-page" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+
+
+
+<div class="quarto-about-solana column-page">
+  <div class="about-entity">
+    <div class="entity-contents">
+      <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Warren James, PhD</h1>
-<p class="subtitle lead">Data analyst working at the University of Aberdeen and <br>NHS Grampian</p>
+<p class="subtitle lead">Data analyst working at the University of Aberdeen and NHS Grampian</p>
 </div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
+<div class="quarto-title-meta column-page">
   </div>
-  
-
-
-</header>
-
-
-<div id="hero-heading">
+</header> <div class="about-links">
+  <a href="https://github.com/warren-james" class="about-link" rel="" target="">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text"></span>
+  </a>
+  <a href="https://www.instagram.com/warrenrgjames/" class="about-link" rel="" target="">
+    <i class="bi bi-instagram"></i>
+     <span class="about-link-text"></span>
+  </a>
+</div>
+      <div class="about-contents"><div id="hero-heading">
 <p>I am a researcher interested in using a whole host of statistical methods to answer all sorts of interesting (not always) questions. The work I do is all in R and so I thought to save me time I could put some of this on a website somewhere that other people might also find useful.</p>
 <p>Currently, I’m employed as part of the <a href="https://www.abdn.ac.uk/iahs/research/epidemiology/index.php">Centre for Musculoskeletal and Pain Epidemiology</a>, and the <a href="https://www.abdn.ac.uk/iahs/research/biostatistics-and-health-data-sciences-3072.php">Biostatistics and Health Data Science Group</a> as a research fellow, and I’m also working with NHS Grampian as a data scientist. My day-to-day job involves using Electronic Health Care records to answer questions of clinical interest.</p>
+</div></div>
+    </div>
+    <img src="assets/img/test.png" class="about-image
+  rounded " style="width: 28em;">
+  </div>
 </div>
+
+
 
 
 
@@ -319,13 +329,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   } else {
     toggleColorMode(false);
   }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

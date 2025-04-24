@@ -1,7 +1,27 @@
 ---
 title: "Warren James, PhD"
 pagetitle: "Warren James"
-subtitle: "Data analyst working at the University of Aberdeen and <br>NHS Grampian"
+subtitle: "Data analyst working at the University of Aberdeen and NHS Grampian"
+image: assets/img/test.png
+
+about: 
+  template: solana
+  image-width: 28em
+  id: hero-heading
+  links: 
+    - icon: github
+      aria-label: "GitHub"
+      href: https://github.com/warren-james
+    - icon: instagram
+      aria-label: "Instagram"
+      href: https://www.instagram.com/warrenrgjames/
+    
+page-layout: full    
+
+header-includes: >
+  <link rel="stylesheet" href="assets/index.css">
+resources:
+  - assets/index.css
 ---
 
 :::{#hero-heading}
