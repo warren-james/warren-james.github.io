@@ -29,6 +29,7 @@ format:
         - cosmo
       dark: 
         - superhero # I want to make my own one at some point... Would be nicer
+        - assets/dark_theme.scss # this doesn't work... not sure why... will do some digging
     lightbox: true
     link-external-icon: true
     link-external-newwindow: true

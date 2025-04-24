@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="This is where I have stored all the supplementary material for any papers I’ve been involved in.   Where the data can be shared, I have included a link to the github repository. Otherwise, I did my best (at the time) to make something to demonstrate what the data looked like and the choices we made regarding the analysis.">
+<meta name="description" content="This is where I have stored all the supplementary material for any papers I’ve been involved in.   Where the data can be shared, I have included a link to the github repository. Otherwise, I did my best (at the time) to make something to demonstrate what the data looked like and the choices we made regarding the analysis.Please note, this is a work in progress, I’m currently going back and updating my old supplementary materials to have a consistent style.">
 
 <title>Supplementary Materials – Warren James</title>
 <style>
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
     };
@@ -196,6 +196,7 @@ window.Quarto = {
 <div>
   <div class="description">
     <p>This is where I have stored all the supplementary material for any papers I’ve been involved in. <br> Where the data can be shared, I have included a link to the github repository. Otherwise, I did my best (at the time) to make something to demonstrate what the data looked like and the choices we made regarding the analysis.</p>
+    <p>Please note, this is a work in progress, I’m currently going back and updating my old supplementary materials to have a consistent style.</p>
   </div>
 </div>
 
@@ -217,6 +218,24 @@ window.Quarto = {
 
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
+  </div>
+</div>
 <div class="list quarto-listing-default">
 <div class="quarto-post image-right" data-index="0" data-listing-date-sort="1719788400000" data-listing-file-modified-sort="1730907149986" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="44" data-listing-word-count-sort="8613">
 <div class="thumbnail">

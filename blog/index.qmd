@@ -9,6 +9,7 @@ listing:
      - "**/index.qmd"
      - "**/index.markdown" 
      - "**/index.md"
+  sort-ui: [title, date]
   sort: "date desc"
 ---
 
