@@ -365,7 +365,7 @@ Unsurprisingly, our model that used the correct distribution makes a better esti
 
 ## A different time point
 
-If we look at @fig-weibCPDF, we can see that `r TOI` is roughly the point at which the hazard functions cross over. So what happens if we look at a different time point, say maybe half this so we have `r TOI/2` years observation instead? Annoyingly, we'll have to process the data again for the logistic regression and run the model again in order to get some results, but for the Weibull model we just need to get estimates for a different time point. So, let's re-run the logistic regression quick. 
+If we look at @fig-weibCPDF, we can see that `r TOI` is roughly the point at which the survival functions cross over. So what happens if we look at a different time point, say maybe half this so we have `r TOI/2` years observation instead? Annoyingly, we'll have to process the data again for the logistic regression and run the model again in order to get some results, but for the Weibull model we just need to get estimates for a different time point. So, let's re-run the logistic regression quick. 
 
 ```{r set logistic mk2}
 TOI_2 <- TOI/2
